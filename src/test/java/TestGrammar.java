@@ -32,7 +32,7 @@ public class TestGrammar {
                 "{ y:=1;}";
 
         CharStream inputCharStream = new ANTLRInputStream(new StringReader(simplestProgram));
-        TokenSource tokenSource = new ShapePlacerLexer(inputCharStream);
+        TokenSource tokenSource = new GrammarLexer(inputCharStream);
         TokenStream inputTokenStream = new CommonTokenStream(tokenSource);
         GrammarParser parser = new GrammarParser(inputTokenStream);
 
