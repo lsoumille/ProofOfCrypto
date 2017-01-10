@@ -20,7 +20,7 @@ public class TestGrammar {
 
     @Test
     public void testExploratoryString() throws IOException {
-            //String simplestProgram = "sphere 12 12 12 cube 2 3 4 Bite cube 4 4 4 sphere 3 3 3";
+            //String simplestProgram = "sphere 12 12 12 cube 2 3 4 cube 4 4 4 sphere 3 3 3";
             String simplestProgram = "x := 1;" +
                     "y :={0,1,2,33};" +
                     "if (x>y) then " +
