@@ -12,4 +12,12 @@ public class Configuration {
         this.p = p;
         this.m = m;
     }
+
+    public Program getProgram() {
+        return p;
+    }
+
+    public Memory getMemory() {
+        return m;
+    }
 }

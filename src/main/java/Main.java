@@ -48,32 +48,36 @@ public class Main {
         return d0;
     }
 
-    // Renvoie la distribution du niveau (x+1) dans la chaîne de Markov
-    public Distribution distributionTransformer(Distribution dx, Configuration si, Configuration sf) {
+    //  Détermine les états dans lesquels va être la configuration suivante dans la chaîne de Markov
+    public String[] statesProcess(Distribution dx, Configuration si) {
 
         // On détermine dans cette partie les états dans lesquels va être la configuration sf
-        char debutEnsemble = '{';
-        char finEnsemble = '}';
+        String debutEnsemble = ":={";
+        String finEnsemble = "};";
         String[] states = {};
 
         /* Recherche s'il y a un ensemble {} dans la configuration si
         * (Pour l'instant on considère qu'une seule variable peut avoir plusieurs états, par ex. x:={0,1}) */
-        if (si.toString().indexOf(debutEnsemble) != -1) {
+        if (si.getProgram().toString().indexOf(debutEnsemble) != -1) {
 
             /* On stocke dans states les différents états
              * On explose par exemple la chaîne "{0,1}" en tableau ["0","1"] */
-            states = si.toString().substring(si.toString().indexOf(debutEnsemble)+1,si.toString().indexOf(finEnsemble))
-                    .split(",");
+            states = si.getProgram().toString().substring(
+                        si.toString().indexOf(debutEnsemble)+1,
+                        si.toString().indexOf(finEnsemble)
+                    ).split(",");
 
         } else {
+
             /* S'il n'y a qu'un seul état, on le met dans states quand même */
-            states[0] = si.toString().substring(si.toString().indexOf("=")+1,si.toString().indexOf(","));
+            states[0] = si.getProgram().toString().substring(
+                    si.getProgram().toString().indexOf(":=")+1,
+                    si.getProgram().toString().indexOf(";")
+                    );
         }
 
-        int nbStates = states.length;
-
-        //On retourne rien pour l'instant c'est pas fini
-        return null;
+        //On retourne le tableau d'états
+        return states;
     }
 
     public static void main(String[] args) {
