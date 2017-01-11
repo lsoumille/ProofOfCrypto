@@ -49,9 +49,8 @@ public class Main {
     }
 
     //  Détermine les états dans lesquels va être la configuration suivante dans la chaîne de Markov
-    public String[] statesProcess(Distribution dx, Configuration si) {
+    public String[] statesProcess(Configuration si) {
 
-        // On détermine dans cette partie les états dans lesquels va être la configuration sf
         String debutEnsemble = ":={";
         String finEnsemble = "};";
         String[] states = {};
