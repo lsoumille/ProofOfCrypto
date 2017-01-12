@@ -1,9 +1,15 @@
+import antlr4.GrammarParser;
 import api.AntlrAPI;
 import business.Configuration;
 import business.Distribution;
 import business.Memory;
 import business.Program;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
+import javax.swing.text.html.HTMLDocument;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,6 +27,9 @@ public class Main {
             "{y:=1;}";
 
     public static AntlrAPI api = new AntlrAPI(simplestProgram);
+
+    public static HashMap<String, List<TerminalNode>> states = new HashMap
+            <String, List<org.antlr.v4.runtime.tree.TerminalNode>>();
 
     //Je fabrique la distribution initiale
     public Distribution init() {
@@ -48,40 +57,48 @@ public class Main {
         return d0;
     }
 
-    //  Détermine les états dans lesquels va être la configuration suivante dans la chaîne de Markov
-    public String[] statesProcess(Configuration si) {
+    //  Etats dans lesquels va être la configuration suivante dans la chaîne de Markov
+    public HashMap<String, List<TerminalNode>> processStates() {
 
-        String debutEnsemble = ":={";
-        String finEnsemble = "};";
-        String[] states = {};
-
-        /* Recherche s'il y a un ensemble {} dans la configuration si
-        * (Pour l'instant on considère qu'une seule variable peut avoir plusieurs états, par ex. x:={0,1}) */
-        if (si.getProgram().toString().indexOf(debutEnsemble) != -1) {
-
-            /* On stocke dans states les différents états
-             * On explose par exemple la chaîne "{0,1}" en tableau ["0","1"] */
-            states = si.getProgram().toString().substring(
-                        si.toString().indexOf(debutEnsemble)+1,
-                        si.toString().indexOf(finEnsemble)
-                    ).split(",");
-
-        } else {
-
-            /* S'il n'y a qu'un seul état, on le met dans states quand même */
-            states[0] = si.getProgram().toString().substring(
-                    si.getProgram().toString().indexOf(":=")+1,
-                    si.getProgram().toString().indexOf(";")
-                    );
+        /* HashMap contenant en clé le nom de la variable, et en valeur l'ensemble affecté
+        à cette variable */
+        for (GrammarParser.CContext c : api.getProgramRoot()) {
+            if (c.expr() == null) {
+                /* Si on rentre dans ce cas, c'est qu'on a probablement
+                affaire à une affectation d'ensemble à une variable */
+                states.put(c.VAR().getText(),c.probFun().CONST());
+            } else {}
         }
 
-        //On retourne le tableau d'états
         return states;
+    }
+
+    // Détermine le nombre de configurations du niveau suivant dans la chaîne de Markov
+    public int nbConfigurations(HashMap<String, List<TerminalNode>> map) {
+
+        int nb = 0;
+
+        for (String key : map.keySet()) {
+            for (int i = 0; i < map.get(key).size(); i ++) {
+                nb++;
+            }
+        }
+
+        return nb;
     }
 
     public static void main(String[] args) {
         Main m = new Main();
         //INIT
-        System.out.println(m.init());
+        //System.out.println(m.init());
+
+        //Détermination des différents états de variables qui se voient affecter
+        // un ensemble dans un programme
+        HashMap<String,List<TerminalNode>> map = m.processStates();
+        System.out.println(map);
+
+        //Détermination du nb de différentes configurations dans le niveau suivant
+        //dans la chaîne de Markov
+        System.out.println(m.nbConfigurations(map));
     }
 }
