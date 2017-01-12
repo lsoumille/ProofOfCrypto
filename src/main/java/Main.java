@@ -28,9 +28,6 @@ public class Main {
 
     public static AntlrAPI api = new AntlrAPI(simplestProgram);
 
-    public static HashMap<String, List<TerminalNode>> states = new HashMap
-            <String, List<org.antlr.v4.runtime.tree.TerminalNode>>();
-
     //Je fabrique la distribution initiale
     public Distribution init() {
         //Create memory
@@ -62,6 +59,8 @@ public class Main {
 
         /* HashMap contenant en clé le nom de la variable, et en valeur l'ensemble affecté
         à cette variable */
+        HashMap<String, List<TerminalNode>> states = new HashMap
+                <String, List<org.antlr.v4.runtime.tree.TerminalNode>>();
         for (GrammarParser.CContext c : api.getProgramRoot()) {
             if (c.expr() == null) {
                 /* Si on rentre dans ce cas, c'est qu'on a probablement
