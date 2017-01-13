@@ -16,7 +16,7 @@ public class Main {
 
     //C'est degueulasse mais je sais pas encore ce que je fais
 
-    public static String simplestProgram = "x:={0,1};" +
+    public static String simplestProgram = "x:=1;" +
             "y:={0,1,2,33};" +
             "if (x>y) then " +
             "{x:=1;z:=0;} " +
@@ -102,6 +102,22 @@ public class Main {
 
     }
 
+    // The formule!
+    public Distribution distributionTransformer(Distribution di, Configuration sPrime, double p) {
+
+        Distribution df = new Distribution();
+        double bigSum = 0.0;
+
+        for (Configuration key : di.getConfigWithProbability().keySet()) {
+
+            if (key.equals(sPrime)) {
+                bigSum += di.getConfigWithProbability().get(key) * p;
+                df.getConfigWithProbability().put(sPrime,bigSum);
+            }
+        }
+        return df;
+    }
+
     public static void main(String[] args) {
         Main m = new Main();
         //INIT
@@ -119,5 +135,24 @@ public class Main {
 
         //Calcule les proba sur un niveau
         System.out.println(m.calculateProba(nbConfig));
+
+        //Calcul distribution
+
+        //Set sPrime, par exemple on veut la config [x:1, y:1, z:0]
+        Program p = new Program();
+        Memory mm = new Memory();
+
+        Set<String> varTokens = api.getVarTokens();
+        for (String t : varTokens) {
+            mm.getVarAndVal().put(t, 1);
+            if (t.equals("z")) {
+                mm.getVarAndVal().remove(t);
+                mm.getVarAndVal().put(t, 0);
+            }
+        }
+        p.setInstructions(api.getProgramRoot());
+        Configuration sPrime = new Configuration(p,mm);
+
+        System.out.println(m.distributionTransformer(m.init(), sPrime,0.25));
     }
 }
