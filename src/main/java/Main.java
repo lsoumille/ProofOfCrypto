@@ -6,8 +6,10 @@ import business.Memory;
 import business.Program;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import javax.swing.text.html.HTMLDocument;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by lucas on 05/01/17.
@@ -16,14 +18,16 @@ public class Main {
 
     //C'est degueulasse mais je sais pas encore ce que je fais
 
-    public static String simplestProgram = "x:={0,1};" +
+    public static String simplestProgram = "x:=1;" +
             "y:={0,1,2,33};" +
             "if (x>y) then " +
             "{x:=1;z:=0;} " +
             "else " +
             "{y:=1;}";
 
-    public static AntlrAPI api = new AntlrAPI(simplestProgram);
+    public static String s2Program = "x:={0,1}";
+
+    public static AntlrAPI api = new AntlrAPI(s2Program);
 
     //Je fabrique la distribution initiale
     public Distribution init() {
@@ -105,19 +109,15 @@ public class Main {
     public static void main(String[] args) {
         Main m = new Main();
         //INIT
-        //System.out.println(m.init());
+        System.out.println(m.init());
 
         //Détermination des différents états de variables qui se voient affecter
         // un ensemble dans un programme
-        HashMap<String,List<TerminalNode>> map = m.processStates();
-        System.out.println(map);
+        //HashMap<String,List<TerminalNode>> map = m.processStates();
+        //System.out.println(map);
 
         //Détermination du nb de différentes configurations dans le niveau suivant
         //dans la chaîne de Markov
-        double nbConfig = m.nbConfigurations(map);
-        System.out.println(nbConfig);
-
-        //Calcule les proba sur un niveau
-        System.out.println(m.calculateProba(nbConfig));
+        //System.out.println(m.nbConfigurations(map));
     }
 }

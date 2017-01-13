@@ -23,4 +23,17 @@ public class Program {
     public void setInstructions(List<GrammarParser.CContext> instructions) {
         this.instructions = instructions;
     }
+
+    public GrammarParser.CContext getFirstInstruction() {
+        return instructions.get(0);
+    }
+
+    @Override
+    public String toString() {
+        String ret = "";
+        for(GrammarParser.CContext c : instructions) {
+            ret += c.getText();
+        }
+        return ret;
+    }
 }

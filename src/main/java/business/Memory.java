@@ -17,4 +17,22 @@ public class Memory {
     public Map<String, Integer> getVarAndVal() {
         return varAndVal;
     }
+
+    public void updateValueForVar(String var, int value) {
+        for (Map.Entry<String, Integer> entry : varAndVal.entrySet()) {
+            if(entry.getKey().equals(var)) {
+                entry.setValue(value);
+                return;
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+        String ret = "[";
+        for (Map.Entry<String, Integer> entry : varAndVal.entrySet()) {
+            ret += entry.getKey() + ":" + entry.getValue() + ",";
+        }
+        return ret.substring(0, ret.length()-1) + ']';
+    }
 }

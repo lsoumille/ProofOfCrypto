@@ -18,11 +18,26 @@ public class Distribution {
         return configWithProbability;
     }
 
-    //TODO
+    /**
+     * Merge the configuration if they are equals else add the new configuration to the distribution
+     */
+    public void addConfiguration(Configuration c, Double probability) {
+        for (Map.Entry<Configuration, Double> entry : configWithProbability.entrySet()) {
+            //TODO override equals method for the configuration class
+            if (entry.getKey().equals(c)) {
+                entry.setValue(entry.getValue() * probability);
+                return;
+            }
+        }
+        configWithProbability.put(c, probability);
+    }
+
     @Override
     public String toString() {
-        return "Distribution{" +
-                "configWithProbability=" + configWithProbability +
-                '}';
+        String ret = "Distribution {";
+        for (Map.Entry<Configuration, Double> entry : configWithProbability.entrySet()) {
+            ret += entry.getKey().toString() + " = " + entry.getValue() + "\n";
+        }
+        return ret + '}';
     }
 }

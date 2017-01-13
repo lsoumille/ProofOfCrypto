@@ -3,9 +3,11 @@ package api;
 import antlr4.GrammarLexer;
 import antlr4.GrammarParser;
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +19,8 @@ public class AntlrAPI {
 
     private GrammarParser parser;
 
+    private GrammarParser.ProgramContext programRoot;
+
     public AntlrAPI(String testProgram) {
         CharStream inputCharStream = null;
         try {
@@ -25,7 +29,7 @@ public class AntlrAPI {
             TokenStream inputTokenStream = new CommonTokenStream(tokenSource);
             this.parser = new GrammarParser(inputTokenStream);
 
-            parser.setErrorHandler(new BailErrorStrategy());
+            //parser.setErrorHandler(new BailErrorStrategy());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -41,9 +45,12 @@ public class AntlrAPI {
      * @return
      */
     public Set<String> getVarTokens() {
-        GrammarParser.ProgramContext context = parser.program();
+        //If the root program isn't set else use it
+        if (this.programRoot == null) {
+            this.programRoot = this.parser.program();
+        }
         Set<String> tokens = new HashSet<String>();
-        recursiveTokenSearch(context.c(), tokens);
+        recursiveTokenSearch(this.programRoot.c(), tokens);
         return tokens;
     }
 
@@ -51,6 +58,7 @@ public class AntlrAPI {
      * Try all path in order to find all variable declarations
      * @param c
      * @param res
+     * TODO Change if and while using antlr
      */
     private void recursiveTokenSearch(List<GrammarParser.CContext> c, Set<String> res) {
         for(GrammarParser.CContext context : c) {
@@ -71,6 +79,33 @@ public class AntlrAPI {
      * @return
      */
     public List<GrammarParser.CContext> getProgramRoot() {
-        return parser.program().c();
+        if (this.programRoot == null) {
+            this.programRoot = this.parser.program();
+        }
+        return this.programRoot.c();
+    }
+
+    /**
+     * return all the possible value that can give the random pick on a { } or Zq
+     * @param c
+     * @return
+     */
+    public static List<Integer> getAllPossibleValueProbFunc(GrammarParser.ProbFunContext c) {
+        List<Integer> iNodes = new ArrayList<Integer>();
+        //Put the terminal nodes according to the prob function type
+        if (c.ensemble() != null) {
+            List<TerminalNode> tNodes = c.ensemble().CONST();
+            //add all the value inside the braces to the return list
+            for(TerminalNode n : tNodes) {
+                iNodes.add(new Integer(n.getText()));
+            }
+        } else if (c.zq() != null) {
+            int numberZq = new Integer(c.zq().CONST().getText());
+            //Get all the value between 0 and numberZq - 1
+            for(int i = 0 ; i < numberZq ; ++i) {
+                iNodes.add(i);
+            }
+        }
+        return iNodes;
     }
 }

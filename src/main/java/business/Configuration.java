@@ -20,4 +20,9 @@ public class Configuration {
     public Memory getMemory() {
         return m;
     }
+
+    @Override
+    public String toString() {
+        return '<' + p.toString() + ',' + m.toString() + '>';
+    }
 }

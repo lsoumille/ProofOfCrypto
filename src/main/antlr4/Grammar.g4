@@ -34,6 +34,7 @@ OP : '+'
     | '='
     | '<'
     | '>' ;
-probFun :'{' CONST (',' CONST)* '}'
-         | 'Z (' CONST ')'
-         ;
+probFun : ensemble
+        | zq;
+ensemble : '{' CONST (',' CONST)* '}';
+zq : 'Z (' CONST ')';
