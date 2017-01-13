@@ -7,10 +7,7 @@ import business.Program;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import javax.swing.text.html.HTMLDocument;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by lucas on 05/01/17.
@@ -19,7 +16,7 @@ public class Main {
 
     //C'est degueulasse mais je sais pas encore ce que je fais
 
-    public static String simplestProgram = "x:=1;" +
+    public static String simplestProgram = "x:={0,1};" +
             "y:={0,1,2,33};" +
             "if (x>y) then " +
             "{x:=1;z:=0;} " +
@@ -78,10 +75,20 @@ public class Main {
     public double nbConfigurations(HashMap<String, List<TerminalNode>> map) {
 
         double nb = 0.0;
+        ArrayList<Double> nbs = new ArrayList<Double>();
 
         for (String key : map.keySet()) {
-            for (int i = 0; i < map.get(key).size(); i ++) {
-                nb++;
+
+            if (map.keySet().size() == 1) {
+                for (int i = 0; i < map.get(key).size(); i++) {
+                    nb++;
+                }
+            } else {
+                nb = 1.0;
+                nbs.add((double) map.get(key).size());
+                for (double d : nbs) {
+                    nb *= d;
+                }
             }
         }
 
