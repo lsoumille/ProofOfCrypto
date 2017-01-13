@@ -54,13 +54,15 @@ public class Main {
         return d0;
     }
 
-    //  Etats dans lesquels va être la configuration suivante dans la chaîne de Markov
+    //  Détermine les affectations d'ensembles aux variables qui permettront
+    // d'établir les configurations au niveau suivant dans la chaîne de Markov
     public HashMap<String, List<TerminalNode>> processStates() {
 
         /* HashMap contenant en clé le nom de la variable, et en valeur l'ensemble affecté
         à cette variable */
         HashMap<String, List<TerminalNode>> states = new HashMap
                 <String, List<org.antlr.v4.runtime.tree.TerminalNode>>();
+
         for (GrammarParser.CContext c : api.getProgramRoot()) {
             if (c.expr() == null) {
                 /* Si on rentre dans ce cas, c'est qu'on a probablement
@@ -73,9 +75,9 @@ public class Main {
     }
 
     // Détermine le nombre de configurations du niveau suivant dans la chaîne de Markov
-    public int nbConfigurations(HashMap<String, List<TerminalNode>> map) {
+    public double nbConfigurations(HashMap<String, List<TerminalNode>> map) {
 
-        int nb = 0;
+        double nb = 0.0;
 
         for (String key : map.keySet()) {
             for (int i = 0; i < map.get(key).size(); i ++) {
@@ -84,6 +86,13 @@ public class Main {
         }
 
         return nb;
+    }
+
+    // Calcule les probabilités sur un niveau de la chaîne de Markov
+    public double calculateProba(double nbConfig) {
+
+        return 1/nbConfig;
+
     }
 
     public static void main(String[] args) {
@@ -98,6 +107,10 @@ public class Main {
 
         //Détermination du nb de différentes configurations dans le niveau suivant
         //dans la chaîne de Markov
-        System.out.println(m.nbConfigurations(map));
+        double nbConfig = m.nbConfigurations(map);
+        System.out.println(nbConfig);
+
+        //Calcule les proba sur un niveau
+        System.out.println(m.calculateProba(nbConfig));
     }
 }
