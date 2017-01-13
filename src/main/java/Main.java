@@ -106,18 +106,57 @@ public class Main {
 
     }
 
+    // The formule!
+    public Distribution distributionTransformer(Distribution di, Configuration sPrime, double p) {
+
+        Distribution df = new Distribution();
+        double bigSum = 0.0;
+
+        for (Configuration key : di.getConfigWithProbability().keySet()) {
+
+            if (key.equals(sPrime)) {
+                bigSum += di.getConfigWithProbability().get(key) * p;
+                df.getConfigWithProbability().put(sPrime,bigSum);
+            }
+        }
+        return df;
+    }
+
     public static void main(String[] args) {
         Main m = new Main();
         //INIT
-        System.out.println(m.init());
+        //System.out.println(m.init());
 
         //Détermination des différents états de variables qui se voient affecter
         // un ensemble dans un programme
-        //HashMap<String,List<TerminalNode>> map = m.processStates();
-        //System.out.println(map);
+        HashMap<String,List<TerminalNode>> map = m.processStates();
+        System.out.println(map);
 
         //Détermination du nb de différentes configurations dans le niveau suivant
         //dans la chaîne de Markov
-        //System.out.println(m.nbConfigurations(map));
+        double nbConfig = m.nbConfigurations(map);
+        System.out.println(nbConfig);
+
+        //Calcule les proba sur un niveau
+        System.out.println(m.calculateProba(nbConfig));
+
+        //Calcul distribution
+
+        //Set sPrime, par exemple on veut la config [x:1, y:1, z:0]
+        Program p = new Program();
+        Memory mm = new Memory();
+
+        Set<String> varTokens = api.getVarTokens();
+        for (String t : varTokens) {
+            mm.getVarAndVal().put(t, 1);
+            if (t.equals("z")) {
+                mm.getVarAndVal().remove(t);
+                mm.getVarAndVal().put(t, 0);
+            }
+        }
+        p.setInstructions(api.getProgramRoot());
+        Configuration sPrime = new Configuration(p,mm);
+
+        System.out.println(m.distributionTransformer(m.init(), sPrime,0.25));
     }
 }
