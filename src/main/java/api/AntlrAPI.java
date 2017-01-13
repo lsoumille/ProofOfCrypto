@@ -73,11 +73,11 @@ public class AntlrAPI {
             //if the c rule starts with VAR add the token to the set
             if (context.VAR() != null) {
                 res.add(context.VAR().getText());
-            } else if (context.getText().startsWith("if ")) { //if c rule starts with if search in the then and the else blocks
-                recursiveTokenSearch(context.program().get(0).c(), res);
-                recursiveTokenSearch(context.program().get(1).c(), res);
-            } else if (context.getText().startsWith("while ")) { //if c rule starts with while search in the loop block
-                recursiveTokenSearch(context.program().get(0).c(), res);
+            } else if (context.ifInst() != null) { //if c rule starts with if search in the then and the else blocks
+                recursiveTokenSearch(context.ifInst().program(0).c(), res);
+                recursiveTokenSearch(context.ifInst().program(1).c(), res);
+            } else if (context.whileInst() != null) { //if c rule starts with while search in the loop block
+                recursiveTokenSearch(context.whileInst().program().c(), res);
             }
         }
     }

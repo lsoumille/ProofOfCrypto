@@ -1,8 +1,11 @@
 package antlr4;// Generated from Grammar.g4 by ANTLR 4.0
-
-import org.antlr.v4.runtime.tree.ParseTreeListener;
+import org.antlr.v4.runtime.tree.*;
+import org.antlr.v4.runtime.Token;
 
 public interface GrammarListener extends ParseTreeListener {
+	void enterWhileInst(GrammarParser.WhileInstContext ctx);
+	void exitWhileInst(GrammarParser.WhileInstContext ctx);
+
 	void enterC(GrammarParser.CContext ctx);
 	void exitC(GrammarParser.CContext ctx);
 
@@ -23,4 +26,7 @@ public interface GrammarListener extends ParseTreeListener {
 
 	void enterExprBis(GrammarParser.ExprBisContext ctx);
 	void exitExprBis(GrammarParser.ExprBisContext ctx);
+
+	void enterIfInst(GrammarParser.IfInstContext ctx);
+	void exitIfInst(GrammarParser.IfInstContext ctx);
 }

@@ -16,10 +16,15 @@ program : c(';' c)*;
 
 c : VAR ':=' expr
     | VAR ':=' probFun
-    | 'if (' expr ') then {'program'} else {'program'}'
-    | 'while (' expr ') do {'program'}'
+    | ifInst
+    | whileInst
     | /* Epsilon*/
     ;
+ifInst : 'if (' expr ') then {'program'} else {'program'}'
+    ;
+whileInst : 'while (' expr ') do {'program'}'
+    ;
+
 expr : CONST exprBis
       | VAR exprBis ;
 exprBis : OP expr exprBis

@@ -16,11 +16,11 @@ import java.util.Set;
  */
 public class ProbLang {
 
-    public static String s2Program = "x:={0,1}x:=0;";
+    public static String s2Program = "x:={0,1};x:={0,2};";
 
     public static AntlrAPI api = new AntlrAPI(s2Program);
 
-    //A list with all the commands available for an unknown user
+    //A list with all the available rules
     public static List<ARule> allRules = new ArrayList<ARule>() {{
         add(new AffectationRule("AFFECTATION"));
     }};
@@ -67,8 +67,11 @@ public class ProbLang {
 
     public void getDF() {
         try {
+            //First check if the program is correct
             api.launchValidationProcess();
+            //Create the initial distribution
             Distribution d0 = init();
+            //calculate the final distribution
             api.launchMarkovProcess(d0);
         } catch (ErrorSyntaxException e) {
             e.printStackTrace();

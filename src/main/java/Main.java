@@ -128,19 +128,18 @@ public class Main {
         //INIT
         ProbLang pl = new ProbLang();
         pl.getDF();
-        System.out.println("PROGRAM ENDED");
         //Détermination des différents états de variables qui se voient affecter
         // un ensemble dans un programme
-        HashMap<String,List<TerminalNode>> map = m.processStates();
-        System.out.println(map);
+        //HashMap<String,List<TerminalNode>> map = m.processStates();
+        //System.out.println(map);
 
         //Détermination du nb de différentes configurations dans le niveau suivant
         //dans la chaîne de Markov
-        double nbConfig = m.nbConfigurations(map);
-        System.out.println(nbConfig);
+        //double nbConfig = m.nbConfigurations(map);
+        //System.out.println(nbConfig);
 
         //Calcule les proba sur un niveau
-        System.out.println(m.calculateProba(nbConfig));
+        //System.out.println(m.calculateProba(nbConfig));
 
         //Calcul distribution
 

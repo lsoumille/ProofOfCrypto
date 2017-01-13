@@ -25,7 +25,7 @@ public class AffectationRule extends ARule {
      *
      */
     public void ApplyRule(Distribution distributionInput, Distribution distributionOutput/*, Configuration toProcess, Program toDoAfter*/) {
-        //Apply the rule for all the configuration
+        //Apply the rule for all the configuration in the input distribution
         for(Configuration toProcess : distributionInput.getConfigurations()){
             //Get info about the affectation
             GrammarParser.CContext p = toProcess.getProgram().getFirstInstruction();
