@@ -2,6 +2,7 @@ package utils;
 
 import api.AntlrAPI;
 import business.Configuration;
+import business.Memory;
 import business.Program;
 
 import java.util.HashMap;
@@ -25,9 +26,12 @@ public class ProbFuncHelper {
         //Create the new configurations
         Map<Configuration, Double> res = new HashMap<Configuration, Double>();
         for(Integer v : valueInEnsemble) {
-            //Update memory
-            toProcess.getMemory().updateValueForVar(toProcess.getProgram().getFirstInstruction().VAR().getText(), v);
-            Configuration newConf = new Configuration(toDoAfter, toProcess.getMemory());
+            //Update memory, need to create a new one else every configuration will share the same reference
+            Memory newMemory = new Memory();
+            newMemory.setVarAndVal(new HashMap<String, Integer>(toProcess.getMemory().getVarAndVal()));
+            newMemory.updateValueForVar(toProcess.getProgram().getFirstInstruction().VAR().getText(), v);
+            //Create new configuration
+            Configuration newConf = new Configuration(toDoAfter, newMemory);
             res.put(newConf, probability);
         }
         return res;

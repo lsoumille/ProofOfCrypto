@@ -18,6 +18,10 @@ public class Memory {
         return varAndVal;
     }
 
+    public void setVarAndVal(Map<String, Integer> varAndVal) {
+        this.varAndVal = varAndVal;
+    }
+
     public void updateValueForVar(String var, int value) {
         for (Map.Entry<String, Integer> entry : varAndVal.entrySet()) {
             if(entry.getKey().equals(var)) {
@@ -27,6 +31,10 @@ public class Memory {
         }
     }
 
+    public Integer getValForVar(String s) {
+        return varAndVal.get(s);
+    }
+
     @Override
     public String toString() {
         String ret = "[";
@@ -34,5 +42,15 @@ public class Memory {
             ret += entry.getKey() + ":" + entry.getValue() + ",";
         }
         return ret.substring(0, ret.length()-1) + ']';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Memory)) return false;
+
+        Memory memory = (Memory) o;
+
+        return varAndVal != null ? varAndVal.equals(memory.varAndVal) : memory.varAndVal == null;
     }
 }

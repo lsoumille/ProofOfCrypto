@@ -9,22 +9,15 @@ import business.Program;
  */
 public abstract class ARule {
 
-    protected Distribution distributionInput;
+    protected String name;
 
-    protected Distribution distributionOutput;
-
-    protected Configuration toProcess;
-
-    protected Program toDoAfter;
-
-    public ARule(Distribution distributionInput, Distribution distributionOutput, Configuration toProcess) {
-        this.distributionInput = distributionInput;
-        this.distributionOutput = distributionOutput;
-        this.toProcess = toProcess;
-        this.toDoAfter = toProcess.getProgram();
-        //Remove the current instruction
-        this.toDoAfter.getInstructions().remove(0);
+    public ARule(String name) {
+        this.name = name;
     }
 
-    public abstract void ApplyRule();
+    public abstract void ApplyRule(Distribution distributionInput, Distribution distributionOutput/*, Configuration toProcess, Program toDoAfter*/);
+
+    public boolean hasSameRuleWord(String s) {
+        return name.equals(s);
+    }
 }

@@ -4,6 +4,7 @@ import business.Configuration;
 import business.Distribution;
 import business.Memory;
 import business.Program;
+import dt.ProbLang;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class Main {
             if (c.expr() == null) {
                 /* Si on rentre dans ce cas, c'est qu'on a probablement
                 affaire à une affectation d'ensemble à une variable */
-                states.put(c.VAR().getText(),c.probFun().CONST());
+                states.put(c.VAR().getText(),c.probFun().ensemble().CONST());
             } else {}
         }
 
@@ -125,8 +126,9 @@ public class Main {
     public static void main(String[] args) {
         Main m = new Main();
         //INIT
-        //System.out.println(m.init());
-
+        ProbLang pl = new ProbLang();
+        pl.getDF();
+        System.out.println("PROGRAM ENDED");
         //Détermination des différents états de variables qui se voient affecter
         // un ensemble dans un programme
         HashMap<String,List<TerminalNode>> map = m.processStates();
@@ -143,7 +145,7 @@ public class Main {
         //Calcul distribution
 
         //Set sPrime, par exemple on veut la config [x:1, y:1, z:0]
-        Program p = new Program();
+        /*Program p = new Program();
         Memory mm = new Memory();
 
         Set<String> varTokens = api.getVarTokens();
@@ -157,6 +159,6 @@ public class Main {
         p.setInstructions(api.getProgramRoot());
         Configuration sPrime = new Configuration(p,mm);
 
-        System.out.println(m.distributionTransformer(m.init(), sPrime,0.25));
+        System.out.println(m.distributionTransformer(m.init(), sPrime,0.25));*/
     }
 }

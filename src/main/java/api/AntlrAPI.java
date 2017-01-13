@@ -2,6 +2,10 @@ package api;
 
 import antlr4.GrammarLexer;
 import antlr4.GrammarParser;
+import business.Distribution;
+import business.Memory;
+import dt.ProbLang;
+import exceptions.ErrorSyntaxException;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
@@ -29,14 +33,18 @@ public class AntlrAPI {
             TokenStream inputTokenStream = new CommonTokenStream(tokenSource);
             this.parser = new GrammarParser(inputTokenStream);
 
-            //parser.setErrorHandler(new BailErrorStrategy());
+            parser.addErrorListener(new DiagnosticErrorListener());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void launchValidationProcess() {
+    public void launchValidationProcess() throws ErrorSyntaxException {
         //TO DO Check if the program does not throw an error during the parser execution
+        if (this.programRoot == null) {
+            this.programRoot = this.parser.program();
+        }
+        if(parser.getNumberOfSyntaxErrors() != 0) throw new ErrorSyntaxException("Syntax Error in the program");
     }
 
     /**
@@ -74,6 +82,31 @@ public class AntlrAPI {
         }
     }
 
+    public void launchMarkovProcess(Distribution d0) {
+        //If the root program isn't set else use it
+        if (this.programRoot == null) {
+            this.programRoot = this.parser.program();
+        }
+        recursiveRuleApplication(this.programRoot.c(), d0);
+    }
+
+    private void recursiveRuleApplication(List<GrammarParser.CContext> c, Distribution inputDistribution) {
+        Distribution outputDistribution = new Distribution();
+        for(GrammarParser.CContext context : c) {
+            //take care of the case if the token is empty
+            if(context.getText().equals("") || context == null) continue;
+            //clean output first
+            outputDistribution = new Distribution();
+            //if the c rule starts with VAR apply affectation rule
+            if (context.VAR() != null) {
+                ProbLang.getRuleToApply("AFFECTATION").ApplyRule(inputDistribution, outputDistribution);
+            }
+            //Set the new distribution for the next instruction
+            inputDistribution = new Distribution(outputDistribution);
+        }
+        System.out.println(outputDistribution);
+    }
+
     /**
      * Return the list with the first set of instructions (program root)
      * @return
@@ -107,5 +140,24 @@ public class AntlrAPI {
             }
         }
         return iNodes;
+    }
+
+    /**
+     * Return the value of an expression
+     * @param e
+     * @param m
+     * @return
+     */
+    public static int getValueExpression(GrammarParser.ExprContext e, Memory m) {
+        //If we've got only a constant
+        if(e.CONST() != null && e.exprBis().OP() == null) {
+            return new Integer(e.CONST().getText()); // return the constant value
+        } else if (e.VAR() != null && e.exprBis().OP() == null) { //If we've got only a variable name
+            return m.getValForVar(e.VAR().toString()); //return the variable value store in memory
+        } else if (e.exprBis() != null) { //If we've got an operator
+            //TODO Deal with OP
+        }
+        //default
+        return 0;
     }
 }

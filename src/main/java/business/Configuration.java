@@ -25,4 +25,15 @@ public class Configuration {
     public String toString() {
         return '<' + p.toString() + ',' + m.toString() + '>';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Configuration)) return false;
+
+        Configuration that = (Configuration) o;
+
+        if (p != null ? !p.equals(that.p) : that.p != null) return false;
+        return m != null ? m.equals(that.m) : that.m == null;
+    }
 }
