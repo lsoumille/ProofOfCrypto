@@ -23,6 +23,7 @@ public class ProbLang {
     //A list with all the available rules
     public static List<ARule> allRules = new ArrayList<ARule>() {{
         add(new AffectationRule("AFFECTATION"));
+        add(new IfRule("IF"));
     }};
 
     /**

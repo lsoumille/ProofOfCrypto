@@ -4,6 +4,7 @@ import antlr4.GrammarLexer;
 import antlr4.GrammarParser;
 import business.Distribution;
 import business.Memory;
+import business.Program;
 import dt.ProbLang;
 import exceptions.ErrorSyntaxException;
 import org.antlr.v4.runtime.*;
@@ -110,6 +111,8 @@ public class AntlrAPI {
             //if the c rule starts with VAR apply affectation rule
             if (context.VAR() != null) {
                 ProbLang.getRuleToApply("AFFECTATION").ApplyRule(inputDistribution, outputDistribution);
+            } else if (context.ifInst() != null) {
+                ProbLang.getRuleToApply("IF").ApplyRule(inputDistribution, outputDistribution);
             }
             //Set the new distribution for the next instruction
             inputDistribution = new Distribution(outputDistribution);
