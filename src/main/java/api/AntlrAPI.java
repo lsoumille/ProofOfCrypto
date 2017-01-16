@@ -101,6 +101,8 @@ public class AntlrAPI {
             //if the c rule starts with VAR apply affectation rule
             if (context.VAR() != null) {
                 ProbLang.getRuleToApply("AFFECTATION").ApplyRule(inputDistribution, outputDistribution);
+            } else if (context.whileInst() != null) {
+                ProbLang.getRuleToApply("WHILE").ApplyRule(inputDistribution, outputDistribution);
             }
             //Set the new distribution for the next instruction
             inputDistribution = new Distribution(outputDistribution);
