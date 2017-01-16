@@ -8,6 +8,7 @@ import dt.ProbLang;
 import exceptions.ErrorSyntaxException;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import utils.ExprHelper;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -155,7 +156,25 @@ public class AntlrAPI {
         } else if (e.VAR() != null && e.exprBis().OP() == null) { //If we've got only a variable name
             return m.getValForVar(e.VAR().toString()); //return the variable value store in memory
         } else if (e.exprBis() != null) { //If we've got an operator
-            //TODO Deal with OP
+            //Get the operator
+            String operator = e.exprBis().OP().getText();
+            //Process the left operand
+            //If the first operand is a VAR get the value of it
+            int valueLeft = 0;
+            if (e.VAR() != null) {
+                valueLeft = m.getValForVar(e.VAR().toString());
+            } else { //the left operand is a digit
+                valueLeft = new Integer(e.CONST().getText());
+            }
+            //Process right operand
+            //The right operand is a VAR get the value of it
+            int valueRight = 0;
+            if (e.exprBis().expr().VAR() != null) {
+                valueRight = m.getValForVar(e.exprBis().expr().VAR().toString());
+            } else { // the right operand is a digit
+                valueRight = new Integer(e.exprBis().expr().CONST().getText());
+            }
+            return ExprHelper.getValueForOperation(valueLeft, operator, valueRight);
         }
         //default
         return 0;
