@@ -67,7 +67,7 @@ public class AntlrAPI {
      * Try all path in order to find all variable declarations
      * @param c
      * @param res
-     * TODO Change if and while using antlr
+     *
      */
     private void recursiveTokenSearch(List<GrammarParser.CContext> c, Set<String> res) {
         for(GrammarParser.CContext context : c) {
@@ -83,6 +83,10 @@ public class AntlrAPI {
         }
     }
 
+    /**
+     * Launch the program analysis
+     * @param d0
+     */
     public void launchMarkovProcess(Distribution d0) {
         //If the root program isn't set else use it
         if (this.programRoot == null) {
@@ -91,6 +95,11 @@ public class AntlrAPI {
         recursiveRuleApplication(this.programRoot.c(), d0);
     }
 
+    /**
+     * Apply semantic rules recursively on the program (list of CCcontext) in param using the inputDistribution
+     * @param c
+     * @param inputDistribution
+     */
     private void recursiveRuleApplication(List<GrammarParser.CContext> c, Distribution inputDistribution) {
         Distribution outputDistribution = new Distribution();
         for(GrammarParser.CContext context : c) {
