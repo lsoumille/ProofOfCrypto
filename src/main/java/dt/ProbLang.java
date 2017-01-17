@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public class ProbLang {
 
-    public static String s2Program = "x:={0,1};if (x<3) then {x:={1,2};y:=3;} else {x:={1,2}}";
+    public static String s2Program = "x:={0,1};while (x<3) do {x:=x+1;y:={0,1}}";
 
     public static AntlrAPI api = new AntlrAPI(s2Program);
 

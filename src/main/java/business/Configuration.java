@@ -21,6 +21,10 @@ public class Configuration {
         return m;
     }
 
+    public void setP(Program p) {
+        this.p = p;
+    }
+
     @Override
     public String toString() {
         return '<' + p.toString() + ',' + m.toString() + '>';

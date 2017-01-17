@@ -32,6 +32,10 @@ public class Distribution {
         return configWithProbability.get(c);
     }
 
+    public void flush() {
+        this.configWithProbability = new HashMap<>();
+    }
+
     /**
      * Merge the configuration if they are equals else add the new configuration to the distribution
      */
