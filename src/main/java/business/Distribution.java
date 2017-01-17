@@ -28,6 +28,10 @@ public class Distribution {
         return new ArrayList<Configuration>(configWithProbability.keySet());
     }
 
+    public Double getProba(Configuration c) {
+        return configWithProbability.get(c);
+    }
+
     /**
      * Merge the configuration if they are equals else add the new configuration to the distribution
      */
@@ -39,6 +43,16 @@ public class Distribution {
             }
         }
         configWithProbability.put(c, probability);
+    }
+
+    /**
+     * Add the configurations inside the distribution
+     * @param multipleConf
+     */
+    public void addMultipleConfigurations(Map<Configuration, Double> multipleConf) {
+        for(Map.Entry<Configuration, Double> entry : multipleConf.entrySet()) {
+            addConfiguration(entry.getKey(), entry.getValue());
+        }
     }
 
     @Override

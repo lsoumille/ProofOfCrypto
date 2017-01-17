@@ -88,12 +88,12 @@ public class AntlrAPI {
      * Launch the program analysis
      * @param d0
      */
-    public void launchMarkovProcess(Distribution d0) {
+    public Distribution launchMarkovProcess(Distribution d0) {
         //If the root program isn't set else use it
         if (this.programRoot == null) {
             this.programRoot = this.parser.program();
         }
-        recursiveRuleApplication(this.programRoot.c(), d0);
+        return recursiveRuleApplication(this.programRoot.c(), d0);
     }
 
     /**
@@ -101,7 +101,7 @@ public class AntlrAPI {
      * @param c
      * @param inputDistribution
      */
-    private void recursiveRuleApplication(List<GrammarParser.CContext> c, Distribution inputDistribution) {
+    private Distribution recursiveRuleApplication(List<GrammarParser.CContext> c, Distribution inputDistribution) {
         Distribution outputDistribution = new Distribution();
         for(GrammarParser.CContext context : c) {
             //take care of the case if the token is empty
@@ -118,6 +118,7 @@ public class AntlrAPI {
             inputDistribution = new Distribution(outputDistribution);
         }
         System.out.println(outputDistribution);
+        return outputDistribution;
     }
 
     /**
