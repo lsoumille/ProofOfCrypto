@@ -25,6 +25,9 @@ public class Program {
     }
 
     public GrammarParser.CContext getFirstInstruction() {
+        if (instructions.size() == 0) {
+            return null;
+        }
         return instructions.get(0);
     }
 

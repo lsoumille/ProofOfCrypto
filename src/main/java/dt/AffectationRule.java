@@ -29,6 +29,8 @@ public class AffectationRule extends ARule {
         for(Configuration toProcess : distributionInput.getConfigurations()){
             //Get info about the affectation
             GrammarParser.CContext p = toProcess.getProgram().getFirstInstruction();
+            //If the instructions is a TIC don't do the process
+            if(p == null) continue;
             //remove the current instruction from the configuration
             Program toDoAfter = toProcess.getProgram().getNextInstructions();
             //If the affectation is an expr

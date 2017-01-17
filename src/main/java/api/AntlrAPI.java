@@ -4,6 +4,7 @@ import antlr4.GrammarLexer;
 import antlr4.GrammarParser;
 import business.Distribution;
 import business.Memory;
+import business.Program;
 import dt.ProbLang;
 import exceptions.ErrorSyntaxException;
 import org.antlr.v4.runtime.*;
@@ -67,7 +68,7 @@ public class AntlrAPI {
      * Try all path in order to find all variable declarations
      * @param c
      * @param res
-     * TODO Change if and while using antlr
+     *
      */
     private void recursiveTokenSearch(List<GrammarParser.CContext> c, Set<String> res) {
         for(GrammarParser.CContext context : c) {
@@ -83,15 +84,24 @@ public class AntlrAPI {
         }
     }
 
-    public void launchMarkovProcess(Distribution d0) {
+    /**
+     * Launch the program analysis
+     * @param d0
+     */
+    public Distribution launchMarkovProcess(Distribution d0) {
         //If the root program isn't set else use it
         if (this.programRoot == null) {
             this.programRoot = this.parser.program();
         }
-        recursiveRuleApplication(this.programRoot.c(), d0);
+        return recursiveRuleApplication(this.programRoot.c(), d0);
     }
 
-    private void recursiveRuleApplication(List<GrammarParser.CContext> c, Distribution inputDistribution) {
+    /**
+     * Apply semantic rules recursively on the program (list of CCcontext) in param using the inputDistribution
+     * @param c
+     * @param inputDistribution
+     */
+    private Distribution recursiveRuleApplication(List<GrammarParser.CContext> c, Distribution inputDistribution) {
         Distribution outputDistribution = new Distribution();
         for(GrammarParser.CContext context : c) {
             //take care of the case if the token is empty
@@ -101,6 +111,8 @@ public class AntlrAPI {
             //if the c rule starts with VAR apply affectation rule
             if (context.VAR() != null) {
                 ProbLang.getRuleToApply("AFFECTATION").ApplyRule(inputDistribution, outputDistribution);
+            } else if (context.ifInst() != null) {
+                ProbLang.getRuleToApply("IF").ApplyRule(inputDistribution, outputDistribution);
             } else if (context.whileInst() != null) {
                 ProbLang.getRuleToApply("WHILE").ApplyRule(inputDistribution, outputDistribution);
             }
@@ -108,6 +120,7 @@ public class AntlrAPI {
             inputDistribution = new Distribution(outputDistribution);
         }
         System.out.println(outputDistribution);
+        return outputDistribution;
     }
 
     /**
