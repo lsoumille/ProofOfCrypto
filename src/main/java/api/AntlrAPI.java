@@ -169,7 +169,7 @@ public class AntlrAPI {
      * @param m
      * @return
      */
-    public static int getValueExpression(GrammarParser.ExprContext e, Memory m) {
+    public static int getValueExpression(GrammarParser.ExprContext e, Memory m, int valueLeftPrec) {
         //If we've got only a constant
         if (e.CONST() != null && e.exprBis().OP() == null) {
             return new Integer(e.CONST().getText()); // return the constant value
@@ -178,13 +178,14 @@ public class AntlrAPI {
         } else if (e.exprBis() != null) { //If we've got an operator
             //Get the operator
             String operator = e.exprBis().OP().getText();
-            //Process the left operand
-            //If the first operand is a VAR get the value of it
-            int valueLeft = 0;
-            if (e.VAR() != null) {
-                valueLeft = m.getValForVar(e.VAR().toString());
-            } else { //the left operand is a digit
-                valueLeft = new Integer(e.CONST().getText());
+            //Process the left operand if it's not a recursive call
+            if(valueLeftPrec == 0) {
+                //If the first operand is a VAR get the value of it
+                if (e.VAR() != null) {
+                    valueLeftPrec = m.getValForVar(e.VAR().toString());
+                } else { //the left operand is a digit
+                    valueLeftPrec = new Integer(e.CONST().getText());
+                }
             }
             //Process right operand
             //The right operand is a VAR get the value of it
@@ -194,7 +195,12 @@ public class AntlrAPI {
             } else { // the right operand is a digit
                 valueRight = new Integer(e.exprBis().expr().CONST().getText());
             }
-            return ExprHelper.getValueForOperation(valueLeft, operator, valueRight);
+            //If we have another expression perform a recursion
+            if (e.exprBis().expr().exprBis() != null && !e.exprBis().expr().exprBis().getText().equals("")) {
+                //Result of the first operation
+                return getValueExpression(e.exprBis().expr(), m, ExprHelper.getValueForOperation(valueLeftPrec, operator, valueRight));
+            }
+            return ExprHelper.getValueForOperation(valueLeftPrec, operator, valueRight);
         }
         //default
         return 0;

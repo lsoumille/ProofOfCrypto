@@ -1,5 +1,6 @@
 import antlr4.GrammarParser;
 import api.AntlrAPI;
+import api.CyclicGroupAPI;
 import business.Configuration;
 import business.Distribution;
 import business.Memory;
@@ -129,17 +130,24 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Main m = new Main();
-        //INIT
-        ProbLang pl1 = new ProbLang("x:=1;");
+        //Create the cyclic group
+        //prime number is mandatory
+        CyclicGroupAPI cCApi = new CyclicGroupAPI(5);
+        //CPA_EG in str
+        String cpa_EG = "q:=" + cCApi.getQ()
+                              + ";b:={0,1};kPrimeD:={"
+                              + cCApi.generateValuesForBraces()
+                              + "};kPrimeE:=" + cCApi.getGenerator() + "^kPrimeD%q;kE:=kPrimeE;kD:=kPrimeD;";
+        ProbLang pl1 = new ProbLang(cpa_EG);
         pl1.getDF();
-        ProbLang pl2 = new ProbLang("x:=1;");
+        //EG2 in str
+        String EG2 = "q:=" + cCApi.getQ()
+                           + ";b:={0,1,2};kPrimeD:={"
+                           + cCApi.generateValuesForBraces()
+                           + "};kPrimeE:=" + cCApi.getGenerator() + "^kPrimeD%q;kE:=kPrimeE;kD:=kPrimeD;";
+        ProbLang pl2 = new ProbLang(EG2);
         pl2.getDF();
         System.out.println(CompareProg.areEquiv(pl1, pl2));
-        //DEBUG
-        CyclicGroup cGroup = GStarModSafePrime.getInstance(new Long(5));
-        System.out.println(cGroup.getDefaultGenerator().convertToBigInteger());
-        //DEBUG
         //Détermination des différents états de variables qui se voient affecter
         // un ensemble dans un programme
         //HashMap<String,List<TerminalNode>> map = m.processStates();

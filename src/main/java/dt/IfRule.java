@@ -29,7 +29,7 @@ public class IfRule extends ARule {
             //Get info about the if
             CContext p = toProcess.getProgram().getFirstInstruction();
             //Get the value of the expr inside the if
-            int value = AntlrAPI.getValueExpression(p.ifInst().expr(), toProcess.getMemory());
+            int value = AntlrAPI.getValueExpression(p.ifInst().expr(), toProcess.getMemory(), 0);
             Program pIf = new Program();
             AntlrAPI api = null;
             if (value == 1) { //equivalent to the expression inside if equals to true

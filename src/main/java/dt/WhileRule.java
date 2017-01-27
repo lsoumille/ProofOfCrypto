@@ -41,14 +41,14 @@ public class WhileRule extends ARule {
             int value = 0;
             //while the condition is true execute the while block and toContinue is true
             boolean toContinue = true; //VAR used to check at the end of each loop if we must stop or continue
-            while ((value = AntlrAPI.getValueExpression(p.whileInst().expr(), toProcess.getMemory())) == 1 && toContinue) {
+            while ((value = AntlrAPI.getValueExpression(p.whileInst().expr(), toProcess.getMemory(), 0)) == 1 && toContinue) {
                 //Launch recursion
                 Distribution newDistrib = api.launchMarkovProcess(d0ForBlock);
                 //Check the condition for each configuration
                 for (Configuration c : newDistrib.getConfigurations()) {
                     toContinue = false;
                     //If one configuration is true then continue the execution
-                    if (AntlrAPI.getValueExpression(p.whileInst().expr(), c.getMemory()) == 1) {
+                    if (AntlrAPI.getValueExpression(p.whileInst().expr(), c.getMemory(), 0) == 1) {
                         toContinue = true;
                     }
                 }

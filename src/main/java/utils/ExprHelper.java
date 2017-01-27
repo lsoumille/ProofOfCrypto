@@ -15,7 +15,7 @@ public class ExprHelper {
      * @return
      */
     public static int getValueForAffectation(Configuration toProcess) {
-        return AntlrAPI.getValueExpression(toProcess.getProgram().getFirstInstruction().expr(), toProcess.getMemory());
+        return AntlrAPI.getValueExpression(toProcess.getProgram().getFirstInstruction().expr(), toProcess.getMemory(), 0);
     }
 
     /**
