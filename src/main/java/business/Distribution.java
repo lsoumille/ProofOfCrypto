@@ -51,10 +51,11 @@ public class Distribution {
 
     /**
      * Add the configurations inside the distribution
+     *
      * @param multipleConf
      */
     public void addMultipleConfigurations(Map<Configuration, Double> multipleConf) {
-        for(Map.Entry<Configuration, Double> entry : multipleConf.entrySet()) {
+        for (Map.Entry<Configuration, Double> entry : multipleConf.entrySet()) {
             addConfiguration(entry.getKey(), entry.getValue());
         }
     }

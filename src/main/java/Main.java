@@ -69,8 +69,9 @@ public class Main {
             if (c.expr() == null) {
                 /* Si on rentre dans ce cas, c'est qu'on a probablement
                 affaire à une affectation d'ensemble à une variable */
-                states.put(c.VAR().getText(),c.probFun().ensemble().CONST());
-            } else {}
+                states.put(c.VAR().getText(), c.probFun().ensemble().CONST());
+            } else {
+            }
         }
 
         return states;
@@ -103,7 +104,7 @@ public class Main {
     // Calcule les probabilités sur un niveau de la chaîne de Markov
     public double calculateProba(double nbConfig) {
 
-        return 1/nbConfig;
+        return 1 / nbConfig;
 
     }
 
@@ -117,7 +118,7 @@ public class Main {
 
             if (key.equals(sPrime)) {
                 bigSum += di.getConfigWithProbability().get(key) * p;
-                df.getConfigWithProbability().put(sPrime,bigSum);
+                df.getConfigWithProbability().put(sPrime, bigSum);
             }
         }
         return df;

@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public class ProbLang {
 
-    public static String s2Program = "x:={0,1};while (x<3) do {x:=x+1;y:={0,1}}";
+    public static String s2Program = "q:=4;b:={0,1};kPrimeD:={1,2,3};kPrimeE:=1^kPrimeD%q;kE:=kPrimeE;kD:=kPrimeD;";
 
     public static AntlrAPI api = new AntlrAPI(s2Program);
 
@@ -29,12 +29,13 @@ public class ProbLang {
 
     /**
      * Return the rule corresponding to the name in param
+     *
      * @param name
      * @return
      */
     public static ARule getRuleToApply(String name) {
-        for(ARule r : allRules) {
-            if(r.hasSameRuleWord(name))
+        for (ARule r : allRules) {
+            if (r.hasSameRuleWord(name))
                 return r;
         }
         //default

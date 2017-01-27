@@ -24,7 +24,7 @@ public class Memory {
 
     public void updateValueForVar(String var, int value) {
         for (Map.Entry<String, Integer> entry : varAndVal.entrySet()) {
-            if(entry.getKey().equals(var)) {
+            if (entry.getKey().equals(var)) {
                 entry.setValue(value);
                 return;
             }
@@ -41,7 +41,7 @@ public class Memory {
         for (Map.Entry<String, Integer> entry : varAndVal.entrySet()) {
             ret += entry.getKey() + ":" + entry.getValue() + ",";
         }
-        return ret.substring(0, ret.length()-1) + ']';
+        return ret.substring(0, ret.length() - 1) + ']';
     }
 
     @Override

@@ -38,7 +38,7 @@ public class Program {
     public Program getNextInstructions() {
         Program toDoAfter = new Program();
         List<GrammarParser.CContext> newInstructions = new ArrayList<GrammarParser.CContext>();
-        for(int i = 1 ; i < instructions.size() ; ++i) {
+        for (int i = 1; i < instructions.size(); ++i) {
             newInstructions.add(instructions.get(i));
         }
         toDoAfter.setInstructions(newInstructions);
@@ -48,7 +48,7 @@ public class Program {
     @Override
     public String toString() {
         String ret = "";
-        for(GrammarParser.CContext c : instructions) {
+        for (GrammarParser.CContext c : instructions) {
             ret += c.getText();
         }
         return ret.equals("") ? "TIC" : ret;

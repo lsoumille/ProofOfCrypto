@@ -16,6 +16,7 @@ public class ProbFuncHelper {
 
     /**
      * Return the configuration with the associated proba for a ProbFunc
+     *
      * @param toProcess
      * @return
      */
@@ -25,7 +26,7 @@ public class ProbFuncHelper {
         double probability = 1.0 / valueInEnsemble.size();
         //Create the new configurations
         Map<Configuration, Double> res = new HashMap<Configuration, Double>();
-        for(Integer v : valueInEnsemble) {
+        for (Integer v : valueInEnsemble) {
             //Update memory, need to create a new one else every configuration will share the same reference
             Memory newMemory = new Memory();
             newMemory.setVarAndVal(new HashMap<String, Integer>(toProcess.getMemory().getVarAndVal()));

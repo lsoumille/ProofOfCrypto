@@ -1,18 +1,10 @@
 package dt;
 
-import antlr4.GrammarParser;
 import antlr4.GrammarParser.CContext;
 import api.AntlrAPI;
 import business.Configuration;
 import business.Distribution;
-import business.Memory;
 import business.Program;
-import utils.ExprHelper;
-import utils.ProbFuncHelper;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by lucas on 16/01/17.
@@ -25,7 +17,6 @@ public class IfRule extends ARule {
 
     /**
      * Apply an if rule on the toProcess config
-     *
      */
     public void ApplyRule(Distribution distributionInput, Distribution distributionOutput) {
         //TODO
@@ -34,7 +25,7 @@ public class IfRule extends ARule {
         //if false process recursively the else block
         //Fill the distribution output
         //Apply the rule for all the configuration in the input distribution
-        for(Configuration toProcess : distributionInput.getConfigurations()){
+        for (Configuration toProcess : distributionInput.getConfigurations()) {
             //Get info about the if
             CContext p = toProcess.getProgram().getFirstInstruction();
             //Get the value of the expr inside the if

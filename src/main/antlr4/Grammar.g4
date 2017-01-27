@@ -38,7 +38,10 @@ OP : '+'
     | '/'
     | '='
     | '<'
-    | '>' ;
+    | '>'
+    | '%'
+    | '^'
+    ;
 probFun : ensemble
         | zq;
 ensemble : '{' CONST (',' CONST)* '}';

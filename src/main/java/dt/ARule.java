@@ -1,8 +1,6 @@
 package dt;
 
-import business.Configuration;
 import business.Distribution;
-import business.Program;
 
 /**
  * Created by lucas on 13/01/17.

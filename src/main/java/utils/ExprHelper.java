@@ -10,6 +10,7 @@ public class ExprHelper {
 
     /**
      * Return the value of the affectation
+     *
      * @param toProcess
      * @return
      */
@@ -19,11 +20,11 @@ public class ExprHelper {
 
     /**
      * Return the result of the expression passed in param
-     *
-     * TODO Multiple expression
+     * <p>
+     * 24/01 add pow and modulo
      */
     public static int getValueForOperation(int leftOperande, String operator, int rightOperande) {
-        switch (operator){
+        switch (operator) {
             case "+":
                 return leftOperande + rightOperande;
             case "-":
@@ -38,6 +39,10 @@ public class ExprHelper {
                 return leftOperande < rightOperande ? 1 : 0;
             case ">":
                 return leftOperande > rightOperande ? 1 : 0;
+            case "%":
+                return leftOperande % rightOperande;
+            case "^":
+                return (int) Math.pow((new Integer(leftOperande)).doubleValue(), (new Integer(rightOperande).doubleValue()));
         }
         //default value
         return 0;

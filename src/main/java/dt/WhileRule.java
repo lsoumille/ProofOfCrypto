@@ -4,13 +4,7 @@ import antlr4.GrammarParser;
 import api.AntlrAPI;
 import business.Configuration;
 import business.Distribution;
-import business.Memory;
 import business.Program;
-import utils.ExprHelper;
-import utils.ProbFuncHelper;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by lucas on 16/01/17.
@@ -23,7 +17,6 @@ public class WhileRule extends ARule {
 
     /**
      * Apply a while rule on the toProcess config
-     *
      */
     public void ApplyRule(Distribution distributionInput, Distribution distributionOutput) {
         //TODO
@@ -31,7 +24,7 @@ public class WhileRule extends ARule {
         //If true process the block and go to evaluate expression
         //Else return the distribution
         //Apply the rule for all the configuration in the input distribution
-        for(Configuration toProcess : distributionInput.getConfigurations()) {
+        for (Configuration toProcess : distributionInput.getConfigurations()) {
             //Get info about the while
             GrammarParser.CContext p = toProcess.getProgram().getFirstInstruction();
             //Create the API for the while block
@@ -52,7 +45,7 @@ public class WhileRule extends ARule {
                 //Launch recursion
                 Distribution newDistrib = api.launchMarkovProcess(d0ForBlock);
                 //Check the condition for each configuration
-                for(Configuration c : newDistrib.getConfigurations()) {
+                for (Configuration c : newDistrib.getConfigurations()) {
                     toContinue = false;
                     //If one configuration is true then continue the execution
                     if (AntlrAPI.getValueExpression(p.whileInst().expr(), c.getMemory()) == 1) {
@@ -64,7 +57,7 @@ public class WhileRule extends ARule {
                     //Add the configurations of new distrib in the d0 distrib for the next iteration
                     d0ForBlock.flush(); //remove all the configuration inside the distribution
                     //Add the pWhile program in the new distrib in case we need to perform another loop
-                    for(Configuration c : newDistrib.getConfigurations()) {
+                    for (Configuration c : newDistrib.getConfigurations()) {
                         c.setP(pWhile);
                     }
                     d0ForBlock.addMultipleConfigurations(newDistrib.getConfigWithProbability());

@@ -4,7 +4,6 @@ import antlr4.GrammarLexer;
 import antlr4.GrammarParser;
 import business.Distribution;
 import business.Memory;
-import business.Program;
 import dt.ProbLang;
 import exceptions.ErrorSyntaxException;
 import org.antlr.v4.runtime.*;
@@ -46,12 +45,13 @@ public class AntlrAPI {
         if (this.programRoot == null) {
             this.programRoot = this.parser.program();
         }
-        if(parser.getNumberOfSyntaxErrors() != 0) throw new ErrorSyntaxException("Syntax Error in the program");
+        if (parser.getNumberOfSyntaxErrors() != 0) throw new ErrorSyntaxException("Syntax Error in the program");
     }
 
     /**
      * Get all the variable names
      * Used to create the initial distribution
+     *
      * @return
      */
     public Set<String> getVarTokens() {
@@ -66,12 +66,12 @@ public class AntlrAPI {
 
     /**
      * Try all path in order to find all variable declarations
+     *
      * @param c
      * @param res
-     *
      */
     private void recursiveTokenSearch(List<GrammarParser.CContext> c, Set<String> res) {
-        for(GrammarParser.CContext context : c) {
+        for (GrammarParser.CContext context : c) {
             //if the c rule starts with VAR add the token to the set
             if (context.VAR() != null) {
                 res.add(context.VAR().getText());
@@ -86,6 +86,7 @@ public class AntlrAPI {
 
     /**
      * Launch the program analysis
+     *
      * @param d0
      */
     public Distribution launchMarkovProcess(Distribution d0) {
@@ -98,14 +99,15 @@ public class AntlrAPI {
 
     /**
      * Apply semantic rules recursively on the program (list of CCcontext) in param using the inputDistribution
+     *
      * @param c
      * @param inputDistribution
      */
     private Distribution recursiveRuleApplication(List<GrammarParser.CContext> c, Distribution inputDistribution) {
         Distribution outputDistribution = new Distribution();
-        for(GrammarParser.CContext context : c) {
+        for (GrammarParser.CContext context : c) {
             //take care of the case if the token is empty
-            if(context.getText().equals("") || context == null) continue;
+            if (context.getText().equals("") || context == null) continue;
             //clean output first
             outputDistribution = new Distribution();
             //if the c rule starts with VAR apply affectation rule
@@ -125,6 +127,7 @@ public class AntlrAPI {
 
     /**
      * Return the list with the first set of instructions (program root)
+     *
      * @return
      */
     public List<GrammarParser.CContext> getProgramRoot() {
@@ -136,6 +139,7 @@ public class AntlrAPI {
 
     /**
      * return all the possible value that can give the random pick on a { } or Zq
+     *
      * @param c
      * @return
      */
@@ -145,13 +149,13 @@ public class AntlrAPI {
         if (c.ensemble() != null) {
             List<TerminalNode> tNodes = c.ensemble().CONST();
             //add all the value inside the braces to the return list
-            for(TerminalNode n : tNodes) {
+            for (TerminalNode n : tNodes) {
                 iNodes.add(new Integer(n.getText()));
             }
         } else if (c.zq() != null) {
             int numberZq = new Integer(c.zq().CONST().getText());
             //Get all the value between 0 and numberZq - 1
-            for(int i = 0 ; i < numberZq ; ++i) {
+            for (int i = 0; i < numberZq; ++i) {
                 iNodes.add(i);
             }
         }
@@ -160,13 +164,14 @@ public class AntlrAPI {
 
     /**
      * Return the value of an expression
+     *
      * @param e
      * @param m
      * @return
      */
     public static int getValueExpression(GrammarParser.ExprContext e, Memory m) {
         //If we've got only a constant
-        if(e.CONST() != null && e.exprBis().OP() == null) {
+        if (e.CONST() != null && e.exprBis().OP() == null) {
             return new Integer(e.CONST().getText()); // return the constant value
         } else if (e.VAR() != null && e.exprBis().OP() == null) { //If we've got only a variable name
             return m.getValForVar(e.VAR().toString()); //return the variable value store in memory
