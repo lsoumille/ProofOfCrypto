@@ -40,4 +40,11 @@ public class Configuration {
         if (p != null ? !p.equals(that.p) : that.p != null) return false;
         return m != null ? m.equals(that.m) : that.m == null;
     }
+
+    @Override
+    public int hashCode() {
+        int result = p != null ? p.hashCode() : 0;
+        result = 31 * result + (m != null ? m.hashCode() : 0);
+        return result;
+    }
 }

@@ -53,4 +53,9 @@ public class Memory {
 
         return varAndVal != null ? varAndVal.equals(memory.varAndVal) : memory.varAndVal == null;
     }
+
+    @Override
+    public int hashCode() {
+        return varAndVal != null ? varAndVal.hashCode() : 0;
+    }
 }

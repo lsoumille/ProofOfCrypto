@@ -33,6 +33,13 @@
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.21</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/ch.bfh.unicrypt/unicrypt -->
+        <dependency>
+            <groupId>ch.bfh.unicrypt</groupId>
+            <artifactId>unicrypt</artifactId>
+            <version>2.2</version>
+        </dependency>
+
 
     </dependencies>
     <build>

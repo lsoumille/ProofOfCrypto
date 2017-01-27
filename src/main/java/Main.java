@@ -4,7 +4,11 @@ import business.Configuration;
 import business.Distribution;
 import business.Memory;
 import business.Program;
+import ch.bfh.unicrypt.UniCrypt;
+import ch.bfh.unicrypt.math.algebra.general.interfaces.CyclicGroup;
+import ch.bfh.unicrypt.math.algebra.multiplicative.classes.GStarModSafePrime;
 import dt.ProbLang;
+import equiv.CompareProg;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.ArrayList;
@@ -127,8 +131,15 @@ public class Main {
     public static void main(String[] args) {
         Main m = new Main();
         //INIT
-        ProbLang pl = new ProbLang();
-        pl.getDF();
+        ProbLang pl1 = new ProbLang("x:=1;");
+        pl1.getDF();
+        ProbLang pl2 = new ProbLang("x:=1;");
+        pl2.getDF();
+        System.out.println(CompareProg.areEquiv(pl1, pl2));
+        //DEBUG
+        CyclicGroup cGroup = GStarModSafePrime.getInstance(new Long(5));
+        System.out.println(cGroup.getDefaultGenerator().convertToBigInteger());
+        //DEBUG
         //Détermination des différents états de variables qui se voient affecter
         // un ensemble dans un programme
         //HashMap<String,List<TerminalNode>> map = m.processStates();

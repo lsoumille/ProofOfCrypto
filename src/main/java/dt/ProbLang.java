@@ -16,9 +16,17 @@ import java.util.Set;
  */
 public class ProbLang {
 
-    public static String s2Program = "q:=4;b:={0,1};kPrimeD:={1,2,3};kPrimeE:=1^kPrimeD%q;kE:=kPrimeE;kD:=kPrimeD;";
+    public String s2Program = "q:=5;b:={0,1};kPrimeD:={1,2,3};kPrimeE:=4^kPrimeD%q;kE:=kPrimeE;kD:=kPrimeD;";
 
-    public static AntlrAPI api = new AntlrAPI(s2Program);
+    public AntlrAPI api = new AntlrAPI(s2Program);
+
+    //DEBUG
+    public AntlrAPI api2 = new AntlrAPI("x:=1;");
+
+    public ProbLang(String s2Program) {
+        this.s2Program = s2Program;
+        this.api = new AntlrAPI(this.s2Program);
+    }
 
     //A list with all the available rules
     public static List<ARule> allRules = new ArrayList<ARule>() {{
@@ -68,16 +76,18 @@ public class ProbLang {
         return d0;
     }
 
-    public void getDF() {
+    public Distribution getDF() {
         try {
             //First check if the program is correct
             api.launchValidationProcess();
             //Create the initial distribution
             Distribution d0 = init();
             //calculate the final distribution
-            api.launchMarkovProcess(d0);
+            return api.launchMarkovProcess(d0);
         } catch (ErrorSyntaxException e) {
             e.printStackTrace();
         }
+        //Default return
+        return null;
     }
 }

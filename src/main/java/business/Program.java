@@ -1,6 +1,6 @@
 package business;
 
-import antlr4.GrammarParser;
+import antlr4.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +61,13 @@ public class Program {
 
         Program program = (Program) o;
 
-        return instructions != null ? instructions.equals(program.instructions) : program.instructions == null;
+        String thisInstInStr = this.toString();
+        String paramInstInStr = program.toString();
+        return thisInstInStr.equals(paramInstInStr);
+    }
+
+    @Override
+    public int hashCode() {
+        return instructions != null || instructions.isEmpty() ? this.toString().hashCode() : 0;
     }
 }

@@ -69,6 +69,7 @@ public class Distribution {
         return ret + '}';
     }
 
+    //TODO Must use a better algorithm to compare the two maps
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,6 +77,14 @@ public class Distribution {
 
         Distribution that = (Distribution) o;
 
-        return configWithProbability != null ? configWithProbability.equals(that.configWithProbability) : that.configWithProbability == null;
+        for (Map.Entry<Configuration, Double> entry : configWithProbability.entrySet()) {
+            if(that.getConfigWithProbability().get(entry.getKey()) == null || !entry.getValue().equals(that.getConfigWithProbability().get(entry.getKey())))
+                return false;
+        }
+        for (Map.Entry<Configuration, Double> entry : that.getConfigWithProbability().entrySet()) {
+            if(configWithProbability.get(entry.getKey()) == null || !entry.getValue().equals(configWithProbability.get(entry.getKey())))
+                return false;
+        }
+        return true;
     }
 }
