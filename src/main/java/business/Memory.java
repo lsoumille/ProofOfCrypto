@@ -58,4 +58,18 @@ public class Memory {
     public int hashCode() {
         return varAndVal != null ? varAndVal.hashCode() : 0;
     }
+
+    public boolean isEquivalent(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Memory)) return false;
+
+        Memory memory = (Memory) o;
+
+        for (Map.Entry<String, Integer> entry : memory.getVarAndVal().entrySet()) {
+            if(this.varAndVal.containsKey(entry.getKey()) && !this.varAndVal.get(entry.getKey()).equals(entry.getValue())) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

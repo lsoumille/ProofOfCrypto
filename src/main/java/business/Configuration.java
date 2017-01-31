@@ -47,4 +47,13 @@ public class Configuration {
         result = 31 * result + (m != null ? m.hashCode() : 0);
         return result;
     }
+
+    public boolean isEquivalent(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Configuration)) return false;
+
+        Configuration that = (Configuration) o;
+
+        return m != null ? m.isEquivalent(that.m) : that.m == null;
+    }
 }

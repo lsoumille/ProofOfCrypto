@@ -4,6 +4,7 @@ import ch.bfh.unicrypt.math.algebra.multiplicative.classes.GStarModSafePrime;
 
 /**
  * Created by lucas on 27/01/17.
+ *
  */
 public class CyclicGroupAPI {
 

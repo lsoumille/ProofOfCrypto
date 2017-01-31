@@ -8,7 +8,13 @@ import dt.ProbLang;
  */
 public class CompareProg {
 
+    /**
+     * Check observational equivalence between two probLangs
+     * @param p1
+     * @param p2
+     * @return
+     */
     public static boolean areEquiv(ProbLang p1, ProbLang p2) {
-        return p1.getDF().equals(p2.getDF());
+        return p1.getDF().equivalent(p2.getDF());
     }
 }

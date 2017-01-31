@@ -6,16 +6,20 @@ import business.Distribution;
 import business.Memory;
 import business.Program;
 import ch.bfh.unicrypt.UniCrypt;
+import ch.bfh.unicrypt.crypto.schemes.encryption.classes.ElGamalEncryptionScheme;
+import ch.bfh.unicrypt.helper.factorization.SafePrime;
 import ch.bfh.unicrypt.math.algebra.general.interfaces.CyclicGroup;
+import ch.bfh.unicrypt.math.algebra.general.interfaces.Element;
 import ch.bfh.unicrypt.math.algebra.multiplicative.classes.GStarModSafePrime;
 import dt.ProbLang;
 import equiv.CompareProg;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import org.bouncycastle.crypto.engines.ElGamalEngine;
+import org.bouncycastle.crypto.generators.ElGamalParametersGenerator;
+import org.bouncycastle.jcajce.provider.asymmetric.elgamal.ElGamalUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.security.SecureRandom;
+import java.util.*;
 
 /**
  * Created by lucas on 05/01/17.
@@ -132,22 +136,22 @@ public class Main {
     public static void main(String[] args) {
         //Create the cyclic group
         //prime number is mandatory
-        CyclicGroupAPI cCApi = new CyclicGroupAPI(5);
-        //CPA_EG in str
+        CyclicGroupAPI cCApi = new CyclicGroupAPI(11);
+        System.out.println(cCApi.getGenerator());
         String cpa_EG = "q:=" + cCApi.getQ()
                               + ";b:={0,1};kPrimeD:={"
                               + cCApi.generateValuesForBraces()
                               + "};kPrimeE:=" + cCApi.getGenerator() + "^kPrimeD%q;kE:=kPrimeE;kD:=kPrimeD;";
         ProbLang pl1 = new ProbLang(cpa_EG);
         pl1.getDF();
-        //EG2 in str
-        String EG2 = "q:=" + cCApi.getQ()
-                           + ";b:={0,1,2};kPrimeD:={"
+        //EG1 in str
+        String EG1 = "q:=" + cCApi.getQ()
+                           + ";b:={0,1};kPrimeD:={"
                            + cCApi.generateValuesForBraces()
-                           + "};kPrimeE:=" + cCApi.getGenerator() + "^kPrimeD%q;kE:=kPrimeE;kD:=kPrimeD;";
-        ProbLang pl2 = new ProbLang(EG2);
+                           + "};kPrimeE:=" + cCApi.getGenerator() + "^kPrimeD%q;kE:=kPrimeE;";
+        ProbLang pl2 = new ProbLang(EG1);
         pl2.getDF();
-        System.out.println(CompareProg.areEquiv(pl1, pl2));
+        System.out.println("Equiv CPA_EG and EG1 = " + CompareProg.areEquiv(pl1, pl2));
         //Détermination des différents états de variables qui se voient affecter
         // un ensemble dans un programme
         //HashMap<String,List<TerminalNode>> map = m.processStates();
