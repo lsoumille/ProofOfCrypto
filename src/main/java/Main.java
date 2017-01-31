@@ -134,24 +134,120 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        //DEBUG
+        //String ifEx = "x:=0;while (x=0) do {y:=2;x:=1;};z:=5;";
+        //ProbLang test = new ProbLang(ifEx);
+        //System.out.println("FINAL " + test.getDF());
+        //DEBUG
         //Create the cyclic group
         //prime number is mandatory
         CyclicGroupAPI cCApi = new CyclicGroupAPI(11);
         System.out.println(cCApi.getGenerator());
+        //Set x0 and x1 at 1 and 2
         String cpa_EG = "q:=" + cCApi.getQ()
                               + ";b:={0,1};kPrimeD:={"
                               + cCApi.generateValuesForBraces()
-                              + "};kPrimeE:=" + cCApi.getGenerator() + "^kPrimeD%q;kE:=kPrimeE;kD:=kPrimeD;";
+                              + "};kPrimeE:=" + cCApi.getGenerator() + "^kPrimeD%q;kE:=kPrimeE;kD:=kPrimeD;"
+                              + "if (b=0) then {r:={"
+                              + cCApi.generateValuesForBraces()
+                              + "};power:=r*kPrimeD;calculPower:=" + cCApi.getGenerator() + "^power;"
+                              + "c:=calculPower%q;} else {"
+                              + "r:={" + cCApi.generateValuesForBraces()
+                              + "};power:=r*kPrimeD;calculPower:=" + cCApi.getGenerator() + "^power;"
+                              + "c:=2*calculPower%q;}";
         ProbLang pl1 = new ProbLang(cpa_EG);
         pl1.getDF();
         //EG1 in str
         String EG1 = "q:=" + cCApi.getQ()
                            + ";b:={0,1};kPrimeD:={"
                            + cCApi.generateValuesForBraces()
-                           + "};kPrimeE:=" + cCApi.getGenerator() + "^kPrimeD%q;kE:=kPrimeE;";
+                           + "};kPrimeE:=" + cCApi.getGenerator() + "^kPrimeD%q;kE:=kPrimeE;"
+                           +"if (b=0) then {r:={"
+                           + cCApi.generateValuesForBraces()
+                           + "};power:=r*kPrimeD;calculPower:=" + cCApi.getGenerator() + "^power;"
+                           + "c:=calculPower%q;} else {"
+                           + "r:={" + cCApi.generateValuesForBraces()
+                           + "};power:=r*kPrimeD;calculPower:=" + cCApi.getGenerator() + "^power;"
+                           + "c:=2*calculPower%q;}";
         ProbLang pl2 = new ProbLang(EG1);
         pl2.getDF();
         System.out.println("Equiv CPA_EG and EG1 = " + CompareProg.areEquiv(pl1, pl2));
+        //EG2 in str
+        String EG2 = "q:=" + cCApi.getQ()
+                           + ";b:={0,1};kPrimeD:={"
+                           + cCApi.generateValuesForBraces()
+                           + "};kE:=" + cCApi.getGenerator() + "^kPrimeD%q;"
+                           + "if (b=0) then {r:={"
+                           + cCApi.generateValuesForBraces()
+                           + "};power:=r*kPrimeD;calculPower:=" + cCApi.getGenerator() + "^power;"
+                           + "c:=calculPower%q;} else {"
+                           + "r:={" + cCApi.generateValuesForBraces()
+                           + "};power:=r*kPrimeD;calculPower:=" + cCApi.getGenerator() + "^power;"
+                           + "c:=2*calculPower%q;}";
+        ProbLang pl3 = new ProbLang(EG2);
+        pl3.getDF();
+        System.out.println("Equiv EG1 and EG2 = " + CompareProg.areEquiv(pl2, pl3));
+        //EG3 in str
+        String EG3 = "q:=" + cCApi.getQ()
+                + ";b:={0,1};kPrimeD:={"
+                + cCApi.generateValuesForBraces()
+                + "};"
+                + "if (b=0) then {r:={"
+                + cCApi.generateValuesForBraces()
+                + "};power:=r*kPrimeD;calculPower:=" + cCApi.getGenerator() + "^power;"
+                + "c:=calculPower%q;} else {"
+                + "r:={" + cCApi.generateValuesForBraces()
+                + "};power:=r*kPrimeD;calculPower:=" + cCApi.getGenerator() + "^power;"
+                + "c:=2*calculPower%q;}";
+        ProbLang pl4 = new ProbLang(EG3);
+        pl4.getDF();
+        System.out.println("Equiv EG2 and EG3 = " + CompareProg.areEquiv(pl3, pl4));
+        //EG4 in str
+        String EG4 = "q:=" + cCApi.getQ()
+                + ";b:={0,1};kPrimeD:={"
+                + cCApi.generateValuesForBraces()
+                + "};r:={"
+                + cCApi.generateValuesForBraces()
+                + "};if (b=0) then {power:=r*kPrimeD;calculPower:=" + cCApi.getGenerator() + "^power;"
+                + "c:=calculPower%q;} else {"
+                + "power:=r*kPrimeD;calculPower:=" + cCApi.getGenerator() + "^power;"
+                + "c:=2*calculPower%q;}";
+        ProbLang pl5 = new ProbLang(EG4);
+        pl5.getDF();
+        System.out.println("Equiv EG3 and EG4 = " + CompareProg.areEquiv(pl4, pl5));
+        //EG5 in str
+        String EG5 = "q:=" + cCApi.getQ()
+                + ";kPrimeD:={"
+                + cCApi.generateValuesForBraces()
+                + "};r:={"
+                + cCApi.generateValuesForBraces()
+                + "};b:={0,1};if (b=0) then {r:={"
+                + cCApi.generateValuesForBraces()
+                + "};power:=r*kPrimeD;calculPower:=" + cCApi.getGenerator() + "^power;"
+                + "c:=calculPower%q;} else {"
+                + "r:={" + cCApi.generateValuesForBraces()
+                + "};power:=r*kPrimeD;calculPower:=" + cCApi.getGenerator() + "^power;"
+                + "c:=2*calculPower%q;}";
+        ProbLang pl6 = new ProbLang(EG5);
+        pl6.getDF();
+        System.out.println("Equiv EG4 and EG5 = " + CompareProg.areEquiv(pl5, pl6));
+        //DDH0 in str
+        String DDH0 = "q:=" + cCApi.getQ()
+                + ";kPrimeD:={"
+                + cCApi.generateValuesForBraces()
+                + "};r:={"
+                + cCApi.generateValuesForBraces()
+                + "};b:={0,1};"
+                + "if (b=0) then {r:={"
+                + cCApi.generateValuesForBraces()
+                + "};power:=r*kPrimeD;calculPower:=" + cCApi.getGenerator() + "^power;"
+                + "c:=calculPower%q;} else {"
+                + "r:={" + cCApi.generateValuesForBraces()
+                + "};power:=r*kPrimeD;calculPower:=" + cCApi.getGenerator() + "^power;"
+                + "c:=2*calculPower%q;};d:=1;";
+        ProbLang pl7 = new ProbLang(DDH0);
+        System.out.println("FINAL " + pl7.getDF());
+        System.out.println("Equiv EG5 and DDH0 = " + CompareProg.areEquiv(pl6, pl7));
         //Détermination des différents états de variables qui se voient affecter
         // un ensemble dans un programme
         //HashMap<String,List<TerminalNode>> map = m.processStates();

@@ -40,7 +40,7 @@ public class ExprHelper {
             case ">":
                 return leftOperande > rightOperande ? 1 : 0;
             case "%":
-                return leftOperande % rightOperande;
+                return Math.floorMod(leftOperande, rightOperande);//leftOperande % rightOperande;
             case "^":
                 return (int) Math.pow((new Integer(leftOperande)).doubleValue(), (new Integer(rightOperande).doubleValue()));
         }

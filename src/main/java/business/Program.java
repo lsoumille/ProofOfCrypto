@@ -24,6 +24,10 @@ public class Program {
         this.instructions = instructions;
     }
 
+    public void setInstructions(Program p) {
+        this.instructions = p.getInstructions();
+    }
+
     public GrammarParser.CContext getFirstInstruction() {
         if (instructions.size() == 0) {
             return null;

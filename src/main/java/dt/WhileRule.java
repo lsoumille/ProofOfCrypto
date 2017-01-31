@@ -19,7 +19,6 @@ public class WhileRule extends ARule {
      * Apply a while rule on the toProcess config
      */
     public void ApplyRule(Distribution distributionInput, Distribution distributionOutput) {
-        //TODO
         //Evaluate the expression
         //If true process the block and go to evaluate expression
         //Else return the distribution
@@ -27,6 +26,8 @@ public class WhileRule extends ARule {
         for (Configuration toProcess : distributionInput.getConfigurations()) {
             //Get info about the while
             GrammarParser.CContext p = toProcess.getProgram().getFirstInstruction();
+            //Save the program we need to analyse after the while
+            Program toDoAfter = toProcess.getProgram().getNextInstructions();
             //Create the API for the while block
             Program pWhile = new Program();
             pWhile.setInstructions(p.whileInst().program().c());
@@ -62,6 +63,8 @@ public class WhileRule extends ARule {
                     }
                     d0ForBlock.addMultipleConfigurations(newDistrib.getConfigWithProbability());
                 } else { //Or save the new configuration for the distribution output
+                    //Add the program saved before processing the while instruction
+                    newDistrib.updateProgramForAllConfiguration(toDoAfter);
                     d0ForBlock = newDistrib;
                 }
             }

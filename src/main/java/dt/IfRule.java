@@ -19,7 +19,6 @@ public class IfRule extends ARule {
      * Apply an if rule on the toProcess config
      */
     public void ApplyRule(Distribution distributionInput, Distribution distributionOutput) {
-        //TODO
         //On each configuration, process the expression inside the if
         //if true process recursively the if block
         //if false process recursively the else block
@@ -28,6 +27,8 @@ public class IfRule extends ARule {
         for (Configuration toProcess : distributionInput.getConfigurations()) {
             //Get info about the if
             CContext p = toProcess.getProgram().getFirstInstruction();
+            //Save the program we need to analyse after the if
+            Program toDoAfter = toProcess.getProgram().getNextInstructions();
             //Get the value of the expr inside the if
             int value = AntlrAPI.getValueExpression(p.ifInst().expr(), toProcess.getMemory(), 0);
             Program pIf = new Program();
@@ -49,6 +50,8 @@ public class IfRule extends ARule {
             d0ForBlock.addConfiguration(cIf, distributionInput.getProba(toProcess));
             //Launch recursion
             Distribution newDistrib = api.launchMarkovProcess(d0ForBlock);
+            //Add the program saved before processing the if else instruction
+            newDistrib.updateProgramForAllConfiguration(toDoAfter);
             //Add the configurations of new distrib in the output distribution
             distributionOutput.addMultipleConfigurations(newDistrib.getConfigWithProbability());
         }

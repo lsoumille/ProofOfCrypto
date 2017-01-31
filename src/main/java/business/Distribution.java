@@ -112,4 +112,13 @@ public class Distribution {
         }
         return true;
     }
+
+    /**
+     * Set the program in param for all the configurations in the distribution
+     */
+    public void updateProgramForAllConfiguration(Program p) {
+        for(Map.Entry<Configuration, Double> entry : this.configWithProbability.entrySet()) {
+            entry.getKey().setP(p);
+        }
+    }
 }
