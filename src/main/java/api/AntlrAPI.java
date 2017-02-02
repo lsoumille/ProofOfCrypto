@@ -4,10 +4,12 @@ import antlr4.GrammarLexer;
 import antlr4.GrammarParser;
 import business.Distribution;
 import business.Memory;
+import com.google.common.base.Joiner;
 import dt.ProbLang;
 import exceptions.ErrorSyntaxException;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import utils.Cartesian;
 import utils.ExprHelper;
 
 import java.io.IOException;
@@ -121,7 +123,6 @@ public class AntlrAPI {
             //Set the new distribution for the next instruction
             inputDistribution = new Distribution(outputDistribution);
         }
-        System.out.println(outputDistribution);
         return outputDistribution;
     }
 
@@ -157,6 +158,25 @@ public class AntlrAPI {
             //Get all the value between 0 and numberZq - 1
             for (int i = 0; i < numberZq; ++i) {
                 iNodes.add(i);
+            }
+        } else if (c.powerEnsemble() != null) {
+            List<TerminalNode> tNodes = c.powerEnsemble().CONST();
+            int power = new Integer(tNodes.get(tNodes.size() - 1).getText());
+            //make all the combination for the ensemble of the power length
+            //Init with the tNodes values
+            List<String> list = new ArrayList<>();
+            for(TerminalNode tNode : tNodes) {
+                list.add(tNode.getText());
+            }
+            //create the list to perform the cartesian product
+            List<List<String>> concatCartesianProduct = new ArrayList<>();
+            for(int i = 0 ; i < power ; ++i) {
+                concatCartesianProduct.add(list);
+            }
+            //Convert the string value in Integer
+            for(List<String> s : Cartesian.product(concatCartesianProduct)){
+                //concat before converting
+                iNodes.add(new Integer(Joiner.on("").join(s)));
             }
         }
         return iNodes;

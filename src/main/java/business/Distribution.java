@@ -101,7 +101,34 @@ public class Distribution {
         for(Map.Entry<Configuration, Double> e1 : that.getConfigWithProbability().entrySet()) {
             boolean isEquiv = false;
             for (Map.Entry<Configuration, Double> e2 : this.configWithProbability.entrySet()) {
-                if(e1.getKey().isEquivalent(e2.getKey()) && e1.getValue().equals(e2.getValue())) {
+                if(e1.getKey().isEquivalent(e2.getKey())) {
+                    isEquiv = true;
+                    continue;
+                }
+            }
+            if (!isEquiv) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Return true if the parameter is a distribution and is equivalent
+     * for the vars
+     * @param o
+     * @return
+     */
+    public boolean equivalent(Object o, List<String> vars) {
+        if (this == o) return true;
+        if (!(o instanceof Distribution)) return false;
+
+        Distribution that = (Distribution) o;
+        //Check if all the config in the distribution that are in the current Map object and has the same value
+        for(Map.Entry<Configuration, Double> e1 : that.getConfigWithProbability().entrySet()) {
+            boolean isEquiv = false;
+            for (Map.Entry<Configuration, Double> e2 : this.configWithProbability.entrySet()) {
+                if(e1.getKey().isEquivalent(e2.getKey(), vars)) {
                     isEquiv = true;
                     continue;
                 }

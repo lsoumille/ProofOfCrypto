@@ -10,7 +10,25 @@ import utils.ElGamalProgs;
  */
 public class ElGamalProof {
 
-    public static void processProof(CyclicGroupAPI cGAPI, int x0, int x1) {
+    private CyclicGroupAPI cGAPI;
+
+    private int x0;
+
+    private int x1;
+
+    public ElGamalProof(CyclicGroupAPI cGAPI, int x0, int x1) {
+        this.cGAPI = cGAPI;
+        this.x0 = x0;
+        this.x1 = x1;
+    }
+
+    public ElGamalProof() {
+        this.cGAPI = new CyclicGroupAPI(11);
+        this.x0 = 1;
+        this.x1 = 3;
+    }
+
+    public void processProof() {
         //Create object to have access to the ElGamal programs
         ElGamalProgs egProgs = new ElGamalProgs(cGAPI, x0, x1);
 

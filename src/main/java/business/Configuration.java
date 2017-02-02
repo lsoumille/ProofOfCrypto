@@ -1,5 +1,7 @@
 package business;
 
+import java.util.List;
+
 /**
  * Created by lucas on 10/01/17.
  */
@@ -55,5 +57,14 @@ public class Configuration {
         Configuration that = (Configuration) o;
 
         return m != null ? m.isEquivalent(that.m) : that.m == null;
+    }
+
+    public boolean isEquivalent(Object o, List<String> vars) {
+        if (this == o) return true;
+        if (!(o instanceof Configuration)) return false;
+
+        Configuration that = (Configuration) o;
+
+        return m != null ? m.isEquivalent(that.m, vars) : that.m == null;
     }
 }

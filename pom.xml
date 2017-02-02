@@ -39,13 +39,11 @@
             <artifactId>unicrypt</artifactId>
             <version>2.2</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
         <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.54</version>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>21.0</version>
         </dependency>
-
 
     </dependencies>
     <build>
@@ -70,6 +68,8 @@
                             <include>src/main/java/**/*.java</include>
                             <include>target/generated-sources/antlr4/*.java</include>
                         </includes>
+                        <source>1.7</source>
+                        <target>1.7</target>
                     </configuration>
                 </plugin>
         </plugins>

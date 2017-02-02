@@ -12,6 +12,9 @@ public interface GrammarListener extends ParseTreeListener {
 	void enterProbFun(GrammarParser.ProbFunContext ctx);
 	void exitProbFun(GrammarParser.ProbFunContext ctx);
 
+	void enterPowerEnsemble(GrammarParser.PowerEnsembleContext ctx);
+	void exitPowerEnsemble(GrammarParser.PowerEnsembleContext ctx);
+
 	void enterZq(GrammarParser.ZqContext ctx);
 	void exitZq(GrammarParser.ZqContext ctx);
 

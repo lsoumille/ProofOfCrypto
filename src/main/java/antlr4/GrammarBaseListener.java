@@ -14,6 +14,9 @@ public class GrammarBaseListener implements GrammarListener {
 	@Override public void enterProbFun(GrammarParser.ProbFunContext ctx) { }
 	@Override public void exitProbFun(GrammarParser.ProbFunContext ctx) { }
 
+	@Override public void enterPowerEnsemble(GrammarParser.PowerEnsembleContext ctx) { }
+	@Override public void exitPowerEnsemble(GrammarParser.PowerEnsembleContext ctx) { }
+
 	@Override public void enterZq(GrammarParser.ZqContext ctx) { }
 	@Override public void exitZq(GrammarParser.ZqContext ctx) { }
 

@@ -1,6 +1,7 @@
 package business;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -67,6 +68,19 @@ public class Memory {
 
         for (Map.Entry<String, Integer> entry : memory.getVarAndVal().entrySet()) {
             if(this.varAndVal.containsKey(entry.getKey()) && !this.varAndVal.get(entry.getKey()).equals(entry.getValue())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isEquivalent(Object o, List<String> vars) {
+        if (this == o) return true;
+        if (!(o instanceof Memory)) return false;
+
+        Memory memory = (Memory) o;
+        for(String v : vars) {
+            if(!this.varAndVal.get(v).equals(memory.getValForVar(v))) {
                 return false;
             }
         }

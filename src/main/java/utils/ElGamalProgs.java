@@ -81,8 +81,19 @@ public class ElGamalProgs {
                 + cCApi.generateValuesForBraces()
                 + "};b:={0,1};"
                 + getAdversaryCodeWithoutR() +
-                ";d:=1;";
+                ";d:=0;";
 
+    }
+
+    public String getDDH1() {
+        return "q:=" + cCApi.getQ()
+                + ";kPrimeD:={"
+                + cCApi.generateValuesForBraces()
+                + "};r:={"
+                + cCApi.generateValuesForBraces()
+                + "};b:={0,1};"
+                + getAdversaryCodeWithoutR() +
+                ";d:=1;";
     }
 
     /**

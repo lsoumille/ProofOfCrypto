@@ -16,7 +16,8 @@ whileInst : 'while (' expr ') do {'program'}'
     ;
 
 expr : CONST exprBis
-      | VAR exprBis ;
+      | VAR exprBis
+      ;
 exprBis : OP expr exprBis
       | /*Epsilon*/
       ;
@@ -34,7 +35,12 @@ OP : '+'
     ;
 
 probFun : ensemble
-        | zq;
-
-ensemble : '{' CONST (',' CONST)* '}';
-zq : 'Z (' CONST ')';
+        | zq
+        | powerEnsemble
+        ;
+powerEnsemble : '{' CONST (',' CONST)* '}' CONST
+              ;
+ensemble : '{' CONST (',' CONST)* '}'
+         ;
+zq : 'Z (' CONST ')'
+   ;
