@@ -15,6 +15,7 @@ import dt.ProbLang;
 import equiv.CompareProg;
 import gameproof.ElGamalProof;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import utils.LabProgs;
 
 import java.security.SecureRandom;
 import java.util.*;
@@ -26,7 +27,11 @@ public class Main {
 
     public static void main(String[] args) {
         ElGamalProof egp = new ElGamalProof();
-        egp.processProof();
+        //egp.processProof();
+        LabProgs progs = new LabProgs();
+        ProbLang test = new ProbLang(progs.getLab2Ex1P5(2));
+        System.out.println("FINAL " + test.getDF());
+        //
         //DEBUG
         //String ifEx = "x:=100;y:=countones(x);";
         //ProbLang test = new ProbLang(ifEx);
