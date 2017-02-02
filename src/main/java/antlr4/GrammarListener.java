@@ -6,6 +6,9 @@ public interface GrammarListener extends ParseTreeListener {
 	void enterWhileInst(GrammarParser.WhileInstContext ctx);
 	void exitWhileInst(GrammarParser.WhileInstContext ctx);
 
+	void enterCountones(GrammarParser.CountonesContext ctx);
+	void exitCountones(GrammarParser.CountonesContext ctx);
+
 	void enterC(GrammarParser.CContext ctx);
 	void exitC(GrammarParser.CContext ctx);
 

@@ -14,10 +14,7 @@ import utils.ExprHelper;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by lucas on 10/01/17.
@@ -144,7 +141,7 @@ public class AntlrAPI {
      * @param c
      * @return
      */
-    public static List<Integer> getAllPossibleValueProbFunc(GrammarParser.ProbFunContext c) {
+    public static List<Integer> getAllPossibleValueProbFunc(GrammarParser.ProbFunContext c, Memory m) {
         List<Integer> iNodes = new ArrayList<Integer>();
         //Put the terminal nodes according to the prob function type
         if (c.ensemble() != null) {
@@ -178,6 +175,16 @@ public class AntlrAPI {
                 //concat before converting
                 iNodes.add(new Integer(Joiner.on("").join(s)));
             }
+        } else if (c.countones() != null) {
+            //Convert int to string
+            String value = m.getValForVar(c.countones().VAR().getText()).toString();
+            //count the number of 1 in value
+            int cpt = 0;
+            for(char ch : value.toCharArray()) {
+                if(ch == '1') ++cpt;
+            }
+            //Add the res to the
+            iNodes.add(cpt);
         }
         return iNodes;
     }

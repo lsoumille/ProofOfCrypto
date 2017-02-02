@@ -28,7 +28,7 @@ public class Main {
         ElGamalProof egp = new ElGamalProof();
         egp.processProof();
         //DEBUG
-        //String ifEx = "x:={0,1,2}3;";
+        //String ifEx = "x:=100;y:=countones(x);";
         //ProbLang test = new ProbLang(ifEx);
         //System.out.println("FINAL " + test.getDF());
         //DEBUG

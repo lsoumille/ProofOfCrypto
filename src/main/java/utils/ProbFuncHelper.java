@@ -21,7 +21,7 @@ public class ProbFuncHelper {
      * @return
      */
     public static Map<Configuration, Double> getConfigurationForAffectation(Configuration toProcess, Program toDoAfter) {
-        List<Integer> valueInEnsemble = AntlrAPI.getAllPossibleValueProbFunc(toProcess.getProgram().getFirstInstruction().probFun());
+        List<Integer> valueInEnsemble = AntlrAPI.getAllPossibleValueProbFunc(toProcess.getProgram().getFirstInstruction().probFun(), toProcess.getMemory());
         //Calculate the probability of each value
         double probability = 1.0 / valueInEnsemble.size();
         //Create the new configurations

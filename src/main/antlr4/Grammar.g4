@@ -37,6 +37,7 @@ OP : '+'
 probFun : ensemble
         | zq
         | powerEnsemble
+        | countones
         ;
 powerEnsemble : '{' CONST (',' CONST)* '}' CONST
               ;
@@ -44,3 +45,5 @@ ensemble : '{' CONST (',' CONST)* '}'
          ;
 zq : 'Z (' CONST ')'
    ;
+countones : 'countones(' VAR ')'
+          ;

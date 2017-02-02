@@ -8,6 +8,9 @@ public class GrammarBaseListener implements GrammarListener {
 	@Override public void enterWhileInst(GrammarParser.WhileInstContext ctx) { }
 	@Override public void exitWhileInst(GrammarParser.WhileInstContext ctx) { }
 
+	@Override public void enterCountones(GrammarParser.CountonesContext ctx) { }
+	@Override public void exitCountones(GrammarParser.CountonesContext ctx) { }
+
 	@Override public void enterC(GrammarParser.CContext ctx) { }
 	@Override public void exitC(GrammarParser.CContext ctx) { }
 
