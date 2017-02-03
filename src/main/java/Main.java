@@ -29,7 +29,7 @@ public class Main {
         ElGamalProof egp = new ElGamalProof();
         //egp.processProof();
         LabProgs progs = new LabProgs();
-        ProbLang test = new ProbLang(progs.getLab2Ex4P7());
+        ProbLang test = new ProbLang(progs.getLab2Ex4P6());
         System.out.println(test.getDF());
         //
         //DEBUG

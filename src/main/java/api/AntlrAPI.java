@@ -32,8 +32,6 @@ public class AntlrAPI {
             TokenSource tokenSource = new GrammarLexer(inputCharStream);
             TokenStream inputTokenStream = new CommonTokenStream(tokenSource);
             this.parser = new GrammarParser(inputTokenStream);
-
-            parser.addErrorListener(new DiagnosticErrorListener());
         } catch (IOException e) {
             e.printStackTrace();
         }
