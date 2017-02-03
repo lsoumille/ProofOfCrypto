@@ -91,7 +91,7 @@ public class AntlrAPI {
         if (this.programRoot == null) {
             this.programRoot = this.parser.program();
         }
-        return recursiveRuleApplication(this.programRoot.c(), d0);
+        return programRuleApplication(this.programRoot.c(), d0);
     }
 
     /**
@@ -100,7 +100,7 @@ public class AntlrAPI {
      * @param c
      * @param inputDistribution
      */
-    private Distribution recursiveRuleApplication(List<GrammarParser.CContext> c, Distribution inputDistribution) {
+    private Distribution programRuleApplication(List<GrammarParser.CContext> c, Distribution inputDistribution) {
         Distribution outputDistribution = new Distribution();
         for (GrammarParser.CContext context : c) {
             //take care of the case if the token is empty

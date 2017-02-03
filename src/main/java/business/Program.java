@@ -55,7 +55,7 @@ public class Program {
         for (GrammarParser.CContext c : instructions) {
             ret += c.getText();
         }
-        return ret.equals("") ? "TIC" : ret;
+        return ret.equals("") ? "TICK" : ret;
     }
 
     @Override
