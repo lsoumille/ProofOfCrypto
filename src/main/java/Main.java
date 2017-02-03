@@ -29,15 +29,8 @@ public class Main {
         ElGamalProof egp = new ElGamalProof();
         //egp.processProof();
         LabProgs progs = new LabProgs();
-        ProbLang test = new ProbLang(progs.getLab2Ex1P5(2));
-        //System.out.println("FINAL " + test.getDF());
-        String p1 = "x:=1";
-        String p2 = "x:=1";
-        ProbLang p1PL = new ProbLang(p1);
-        ProbLang p2PL = new ProbLang(p2);
-        List<String> vars = new ArrayList<>();
-        vars.add("x");
-        System.out.println(CompareProg.areEquiv(p1PL, p2PL));
+        ProbLang test = new ProbLang(progs.getLab2Ex4P7());
+        System.out.println(test.getDF());
         //
         //DEBUG
         //String ifEx = "x:=100;y:=countones(x);";

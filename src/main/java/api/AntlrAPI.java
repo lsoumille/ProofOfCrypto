@@ -158,7 +158,9 @@ public class AntlrAPI {
             }
         } else if (c.powerEnsemble() != null) {
             List<TerminalNode> tNodes = c.powerEnsemble().CONST();
+            //Get power and remove last elem
             int power = new Integer(tNodes.get(tNodes.size() - 1).getText());
+            tNodes = tNodes.subList(0, tNodes.size() - 1);
             //make all the combination for the ensemble of the power length
             //Init with the tNodes values
             List<String> list = new ArrayList<>();
