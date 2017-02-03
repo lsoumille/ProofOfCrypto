@@ -1,9 +1,6 @@
 package business;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by lucas on 10/01/17.
@@ -97,20 +94,9 @@ public class Distribution {
         if (!(o instanceof Distribution)) return false;
 
         Distribution that = (Distribution) o;
-        //Check if all the config in the distribution that are in the current Map object and has the same value
-        for(Map.Entry<Configuration, Double> e1 : that.getConfigWithProbability().entrySet()) {
-            boolean isEquiv = false;
-            for (Map.Entry<Configuration, Double> e2 : this.configWithProbability.entrySet()) {
-                if(e1.getKey().isEquivalent(e2.getKey())) {
-                    isEquiv = true;
-                    continue;
-                }
-            }
-            if (!isEquiv) {
-                return false;
-            }
-        }
-        return true;
+        Memory mThis = this.getConfigurations().get(0).getMemory();
+        Memory mThat = that.getConfigurations().get(0).getMemory();
+        return this.equivalent(that, mThat.getCommonVars(mThis));
     }
 
     /**
@@ -124,16 +110,36 @@ public class Distribution {
         if (!(o instanceof Distribution)) return false;
 
         Distribution that = (Distribution) o;
-        //Check if all the config in the distribution that are in the current Map object and has the same value
-        for(Map.Entry<Configuration, Double> e1 : that.getConfigWithProbability().entrySet()) {
-            boolean isEquiv = false;
-            for (Map.Entry<Configuration, Double> e2 : this.configWithProbability.entrySet()) {
-                if(e1.getKey().isEquivalent(e2.getKey(), vars)) {
-                    isEquiv = true;
-                    continue;
+        //Calculate the probability for all the vars in the two distributions
+        Map<Map.Entry<String, Integer>, Double>  varWithProbThis = new HashMap<>();
+        Map<Map.Entry<String, Integer>, Double>  varWithProbThat = new HashMap<>();
+        for(String var : vars) {
+            //Calculate proba for the vars in the this object
+            for(Map.Entry<Configuration, Double> eThis : this.configWithProbability.entrySet()) {
+                if(eThis.getKey().getMemory().getValForVar(var) != null) {
+                    Map.Entry<String, Integer> entry = new AbstractMap.SimpleEntry<String, Integer>(var, eThis.getKey().getMemory().getValForVar(var));
+                    if(! varWithProbThis.containsKey(entry)) {
+                        varWithProbThis.put(entry, eThis.getValue());
+                    } else {
+                        varWithProbThis.put(entry, eThis.getValue() + varWithProbThis.get(var));
+                    }
                 }
             }
-            if (!isEquiv) {
+            //Calculate the proba for the vars in the that object
+            for(Map.Entry<Configuration, Double> eThat : that.configWithProbability.entrySet()) {
+                if(eThat.getKey().getMemory().getValForVar(var) != null) {
+                    Map.Entry<String, Integer> entry = new AbstractMap.SimpleEntry<String, Integer>(var, eThat.getKey().getMemory().getValForVar(var));
+                    if(! varWithProbThat.containsKey(entry)) {
+                        varWithProbThat.put(entry, eThat.getValue());
+                    } else {
+                        varWithProbThat.put(entry, eThat.getValue() + varWithProbThat.get(var));
+                    }
+                }
+            }
+        }
+        //Now compare the two maps
+        for(Map.Entry<Map.Entry<String, Integer>, Double> e : varWithProbThis.entrySet()) {
+            if(!varWithProbThat.containsKey(e.getKey()) || !(varWithProbThat.get(e.getKey()) != e.getValue())) {
                 return false;
             }
         }

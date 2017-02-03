@@ -1,5 +1,6 @@
 package business;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,16 @@ public class Memory {
                 return;
             }
         }
+    }
+
+    public List<String> getCommonVars(Memory toCompare) {
+        List<String> res = new ArrayList<>();
+        for(String s : varAndVal.keySet()) {
+            if(toCompare.getValForVar(s) != null) {
+                res.add(s);
+            }
+        }
+        return res;
     }
 
     public Integer getValForVar(String s) {
