@@ -89,7 +89,7 @@ public class Distribution {
      * @param o
      * @return
      */
-    public boolean equivalent(Object o) {
+    public boolean  equivalent(Object o) {
         if (this == o) return true;
         if (!(o instanceof Distribution)) return false;
 

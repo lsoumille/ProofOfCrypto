@@ -38,7 +38,7 @@ public class AntlrAPI {
     }
 
     public void launchValidationProcess() throws ErrorSyntaxException {
-        //TO DO Check if the program does not throw an error during the parser execution
+        //Check if the program does not throw an error during the parser execution
         if (this.programRoot == null) {
             this.programRoot = this.parser.program();
         }

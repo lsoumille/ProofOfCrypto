@@ -5,6 +5,9 @@ import dt.ProbLang;
 import equiv.CompareProg;
 import utils.ElGamalProgs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by lucas on 01/02/17.
  */
@@ -51,5 +54,18 @@ public class ElGamalProver {
         ProbLang pl7 = new ProbLang(egProgs.getDDH0());
         System.out.println("Equiv EG5 and DDH0 = " + CompareProg.areEquiv(pl6, pl7));
 
+        ProbLang pl8 = new ProbLang(egProgs.getEGPrime());
+        ProbLang pl9 = new ProbLang(egProgs.getEG1Prime());
+        System.out.println("Equiv EG' and EG1' = " + CompareProg.areEquiv(pl8, pl9));
+
+        ProbLang pl10 = new ProbLang(egProgs.getEG2Prime());
+        System.out.println("Equiv EG1 and EG2 = " + CompareProg.areEquiv(pl9, pl10));
+
+        ProbLang pl11 = new ProbLang(egProgs.getDDH1());
+        System.out.println("Equiv EG2 and DDH1 = " + CompareProg.areEquiv(pl10, pl11));
+
+        List<String> varsToEqui = new ArrayList<>();
+        varsToEqui.add("d");
+        System.out.println("Equiv DDH0 and DDH1 with d:=1 = " + CompareProg.areEquiv(pl7, pl11, varsToEqui));
     }
 }
