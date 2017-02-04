@@ -3,39 +3,40 @@ package antlr4;// Generated from Grammar.g4 by ANTLR 4.0
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 public interface GrammarListener extends ParseTreeListener {
-    void enterWhileInst(GrammarParser.WhileInstContext ctx);
 
-    void exitWhileInst(GrammarParser.WhileInstContext ctx);
+	void enterWhileInst(GrammarParser.WhileInstContext ctx);
 
-    void enterC(GrammarParser.CContext ctx);
+	void exitWhileInst(GrammarParser.WhileInstContext ctx);
 
-    void exitC(GrammarParser.CContext ctx);
+	void enterC(GrammarParser.CContext ctx);
 
-    void enterProbFun(GrammarParser.ProbFunContext ctx);
+	void exitC(GrammarParser.CContext ctx);
 
-    void exitProbFun(GrammarParser.ProbFunContext ctx);
+	void enterProbFun(GrammarParser.ProbFunContext ctx);
 
-    void enterZq(GrammarParser.ZqContext ctx);
+	void exitProbFun(GrammarParser.ProbFunContext ctx);
 
-    void exitZq(GrammarParser.ZqContext ctx);
+	void enterZq(GrammarParser.ZqContext ctx);
 
-    void enterExpr(GrammarParser.ExprContext ctx);
+	void exitZq(GrammarParser.ZqContext ctx);
 
-    void exitExpr(GrammarParser.ExprContext ctx);
+	void enterExpr(GrammarParser.ExprContext ctx);
 
-    void enterEnsemble(GrammarParser.EnsembleContext ctx);
+	void exitExpr(GrammarParser.ExprContext ctx);
 
-    void exitEnsemble(GrammarParser.EnsembleContext ctx);
+	void enterEnsemble(GrammarParser.EnsembleContext ctx);
 
-    void enterProgram(GrammarParser.ProgramContext ctx);
+	void exitEnsemble(GrammarParser.EnsembleContext ctx);
 
-    void exitProgram(GrammarParser.ProgramContext ctx);
+	void enterProgram(GrammarParser.ProgramContext ctx);
 
-    void enterExprBis(GrammarParser.ExprBisContext ctx);
+	void exitProgram(GrammarParser.ProgramContext ctx);
 
-    void exitExprBis(GrammarParser.ExprBisContext ctx);
+	void enterExprBis(GrammarParser.ExprBisContext ctx);
 
-    void enterIfInst(GrammarParser.IfInstContext ctx);
+	void exitExprBis(GrammarParser.ExprBisContext ctx);
 
-    void exitIfInst(GrammarParser.IfInstContext ctx);
+	void enterIfInst(GrammarParser.IfInstContext ctx);
+
+	void exitIfInst(GrammarParser.IfInstContext ctx);
 }

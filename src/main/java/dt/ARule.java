@@ -7,15 +7,15 @@ import business.Distribution;
  */
 public abstract class ARule {
 
-    protected String name;
+	protected String name;
 
-    public ARule(String name) {
-        this.name = name;
-    }
+	public ARule(String name) {
+		this.name = name;
+	}
 
-    public abstract void ApplyRule(Distribution distributionInput, Distribution distributionOutput/*, Configuration toProcess, Program toDoAfter*/);
+	public abstract void ApplyRule(Distribution distributionInput, Distribution distributionOutput/*, Configuration toProcess, Program toDoAfter*/);
 
-    public boolean hasSameRuleWord(String s) {
-        return name.equals(s);
-    }
+	public boolean hasSameRuleWord(String s) {
+		return this.name.equals(s);
+	}
 }
