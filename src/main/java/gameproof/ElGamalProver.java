@@ -8,7 +8,7 @@ import utils.ElGamalProgs;
 /**
  * Created by lucas on 01/02/17.
  */
-public class ElGamalProof {
+public class ElGamalProver {
 
     private CyclicGroupAPI cGAPI;
 
@@ -16,13 +16,13 @@ public class ElGamalProof {
 
     private int x1;
 
-    public ElGamalProof(CyclicGroupAPI cGAPI, int x0, int x1) {
+    public ElGamalProver(CyclicGroupAPI cGAPI, int x0, int x1) {
         this.cGAPI = cGAPI;
         this.x0 = x0;
         this.x1 = x1;
     }
 
-    public ElGamalProof() {
+    public ElGamalProver() {
         this.cGAPI = new CyclicGroupAPI(11);
         this.x0 = 1;
         this.x1 = 3;

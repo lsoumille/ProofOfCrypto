@@ -121,7 +121,7 @@ public class Distribution {
                     if(! varWithProbThis.containsKey(entry)) {
                         varWithProbThis.put(entry, eThis.getValue());
                     } else {
-                        varWithProbThis.put(entry, eThis.getValue() + varWithProbThis.get(var));
+                        varWithProbThis.put(entry, eThis.getValue() + varWithProbThis.get(entry));
                     }
                 }
             }
@@ -132,7 +132,7 @@ public class Distribution {
                     if(! varWithProbThat.containsKey(entry)) {
                         varWithProbThat.put(entry, eThat.getValue());
                     } else {
-                        varWithProbThat.put(entry, eThat.getValue() + varWithProbThat.get(var));
+                        varWithProbThat.put(entry, eThat.getValue() + varWithProbThat.get(entry));
                     }
                 }
             }

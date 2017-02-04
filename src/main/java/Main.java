@@ -1,24 +1,4 @@
-import antlr4.GrammarParser;
-import api.AntlrAPI;
-import api.CyclicGroupAPI;
-import business.Configuration;
-import business.Distribution;
-import business.Memory;
-import business.Program;
-import ch.bfh.unicrypt.UniCrypt;
-import ch.bfh.unicrypt.crypto.schemes.encryption.classes.ElGamalEncryptionScheme;
-import ch.bfh.unicrypt.helper.factorization.SafePrime;
-import ch.bfh.unicrypt.math.algebra.general.interfaces.CyclicGroup;
-import ch.bfh.unicrypt.math.algebra.general.interfaces.Element;
-import ch.bfh.unicrypt.math.algebra.multiplicative.classes.GStarModSafePrime;
-import dt.ProbLang;
-import equiv.CompareProg;
-import gameproof.ElGamalProof;
-import org.antlr.v4.runtime.tree.TerminalNode;
-import utils.LabProgs;
-
-import java.security.SecureRandom;
-import java.util.*;
+import gameproof.ElGamalProver;
 
 /**
  * Created by lucas on 05/01/17.
@@ -26,11 +6,11 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        ElGamalProof egp = new ElGamalProof();
-        //egp.processProof();
-        LabProgs progs = new LabProgs();
+        ElGamalProver egp = new ElGamalProver();
+        egp.processProof();
+        /*LabProgs progs = new LabProgs();
         ProbLang test = new ProbLang(progs.getLab2Ex4P6());
-        System.out.println(test.getDF());
+        System.out.println(test.getDF());*/
         //
         //DEBUG
         //String ifEx = "x:=100;y:=countones(x);";
