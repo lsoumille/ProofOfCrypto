@@ -39,6 +39,10 @@ public class ExprHelper {
                 return leftOperande < rightOperande ? 1 : 0;
             case ">":
                 return leftOperande > rightOperande ? 1 : 0;
+            case ">=":
+                return leftOperande >= rightOperande ? 1 : 0;
+            case "<=":
+                return leftOperande <= rightOperande ? 1 : 0;
             case "%":
                 return Math.floorMod(leftOperande, rightOperande);//leftOperande % rightOperande;
             case "^":

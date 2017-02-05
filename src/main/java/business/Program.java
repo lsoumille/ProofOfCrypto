@@ -1,6 +1,6 @@
 package business;
 
-import antlr4.*;
+import antlr4.GrammarParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +20,12 @@ public class Program {
         return instructions;
     }
 
-    public void setInstructions(List<GrammarParser.CContext> instructions) {
-        this.instructions = instructions;
-    }
-
     public void setInstructions(Program p) {
         this.instructions = p.getInstructions();
+    }
+
+    public void setInstructions(List<GrammarParser.CContext> instructions) {
+        this.instructions = instructions;
     }
 
     public GrammarParser.CContext getFirstInstruction() {

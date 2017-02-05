@@ -74,11 +74,11 @@ public class Distribution {
         Distribution that = (Distribution) o;
 
         for (Map.Entry<Configuration, Double> entry : configWithProbability.entrySet()) {
-            if(that.getConfigWithProbability().get(entry.getKey()) == null || !entry.getValue().equals(that.getConfigWithProbability().get(entry.getKey())))
+            if (that.getConfigWithProbability().get(entry.getKey()) == null || !entry.getValue().equals(that.getConfigWithProbability().get(entry.getKey())))
                 return false;
         }
         for (Map.Entry<Configuration, Double> entry : that.getConfigWithProbability().entrySet()) {
-            if(configWithProbability.get(entry.getKey()) == null || !entry.getValue().equals(configWithProbability.get(entry.getKey())))
+            if (configWithProbability.get(entry.getKey()) == null || !entry.getValue().equals(configWithProbability.get(entry.getKey())))
                 return false;
         }
         return true;
@@ -86,10 +86,11 @@ public class Distribution {
 
     /**
      * Return true if the parameter is a distribution and is equivalent
+     *
      * @param o
      * @return
      */
-    public boolean  equivalent(Object o) {
+    public boolean equivalent(Object o) {
         if (this == o) return true;
         if (!(o instanceof Distribution)) return false;
 
@@ -102,6 +103,7 @@ public class Distribution {
     /**
      * Return true if the parameter is a distribution and is equivalent
      * for the vars
+     *
      * @param o
      * @return
      */
@@ -111,14 +113,14 @@ public class Distribution {
 
         Distribution that = (Distribution) o;
         //Calculate the probability for all the vars in the two distributions
-        Map<Map.Entry<String, Integer>, Double>  varWithProbThis = new HashMap<>();
-        Map<Map.Entry<String, Integer>, Double>  varWithProbThat = new HashMap<>();
-        for(String var : vars) {
+        Map<Map.Entry<String, Integer>, Double> varWithProbThis = new HashMap<>();
+        Map<Map.Entry<String, Integer>, Double> varWithProbThat = new HashMap<>();
+        for (String var : vars) {
             //Calculate proba for the vars in the this object
-            for(Map.Entry<Configuration, Double> eThis : this.configWithProbability.entrySet()) {
-                if(eThis.getKey().getMemory().getValForVar(var) != null) {
+            for (Map.Entry<Configuration, Double> eThis : this.configWithProbability.entrySet()) {
+                if (eThis.getKey().getMemory().getValForVar(var) != null) {
                     Map.Entry<String, Integer> entry = new AbstractMap.SimpleEntry<String, Integer>(var, eThis.getKey().getMemory().getValForVar(var));
-                    if(! varWithProbThis.containsKey(entry)) {
+                    if (!varWithProbThis.containsKey(entry)) {
                         varWithProbThis.put(entry, eThis.getValue());
                     } else {
                         varWithProbThis.put(entry, eThis.getValue() + varWithProbThis.get(entry));
@@ -126,10 +128,10 @@ public class Distribution {
                 }
             }
             //Calculate the proba for the vars in the that object
-            for(Map.Entry<Configuration, Double> eThat : that.configWithProbability.entrySet()) {
-                if(eThat.getKey().getMemory().getValForVar(var) != null) {
+            for (Map.Entry<Configuration, Double> eThat : that.configWithProbability.entrySet()) {
+                if (eThat.getKey().getMemory().getValForVar(var) != null) {
                     Map.Entry<String, Integer> entry = new AbstractMap.SimpleEntry<String, Integer>(var, eThat.getKey().getMemory().getValForVar(var));
-                    if(! varWithProbThat.containsKey(entry)) {
+                    if (!varWithProbThat.containsKey(entry)) {
                         varWithProbThat.put(entry, eThat.getValue());
                     } else {
                         varWithProbThat.put(entry, eThat.getValue() + varWithProbThat.get(entry));
@@ -138,8 +140,8 @@ public class Distribution {
             }
         }
         //Now compare the two maps
-        for(Map.Entry<Map.Entry<String, Integer>, Double> e : varWithProbThis.entrySet()) {
-            if(!varWithProbThat.containsKey(e.getKey()) || !(varWithProbThat.get(e.getKey()) != e.getValue())) {
+        for (Map.Entry<Map.Entry<String, Integer>, Double> e : varWithProbThis.entrySet()) {
+            if (!varWithProbThat.containsKey(e.getKey()) || !(varWithProbThat.get(e.getKey()) != e.getValue())) {
                 return false;
             }
         }
@@ -150,7 +152,7 @@ public class Distribution {
      * Set the program in param for all the configurations in the distribution
      */
     public void updateProgramForAllConfiguration(Program p) {
-        for(Map.Entry<Configuration, Double> entry : this.configWithProbability.entrySet()) {
+        for (Map.Entry<Configuration, Double> entry : this.configWithProbability.entrySet()) {
             entry.getKey().setP(p);
         }
     }

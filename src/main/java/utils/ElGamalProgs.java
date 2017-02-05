@@ -139,6 +139,7 @@ public class ElGamalProgs {
 
     /**
      * We assume here that the adversary execute the encryption oracle one time with x0 and x1 parameters
+     *
      * @return
      */
     private String getAdversaryCodePrime() {
@@ -148,6 +149,7 @@ public class ElGamalProgs {
 
     /**
      * We assume here that the adversary execute the encryption oracle one time with x0 and x1 parameters
+     *
      * @return
      */
     private String getAdversaryCodePrimePad() {
@@ -158,6 +160,7 @@ public class ElGamalProgs {
 
     /**
      * We assume here that the adversary execute the encryption oracle one time with x0 and x1 parameters
+     *
      * @return
      */
     private String getAdversaryCodeCPAEG() {
@@ -173,6 +176,7 @@ public class ElGamalProgs {
 
     /**
      * We assume here that the adversary execute the encryption oracle one time with x0 and x1 parameters
+     *
      * @return
      */
     private String getAdversaryCodeEG1() {
@@ -188,6 +192,7 @@ public class ElGamalProgs {
 
     /**
      * We assume here that the adversary execute the encryption oracle one time with x0 and x1 parameters
+     *
      * @return
      */
     private String getAdversaryCode() {

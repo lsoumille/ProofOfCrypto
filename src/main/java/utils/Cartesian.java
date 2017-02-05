@@ -15,13 +15,9 @@ package utils;/* Copyright 2012 LinkedIn Corp.
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
+
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 /**
  * Implements the Cartesian product of ordered collections.
@@ -36,7 +32,7 @@ public class Cartesian {
      * ...] the product is [{a1, b1, c1 ...} ... {a1, b1, c2 ...} ... {a1, b2, c1 ...} ...
      * {aN, bN, cN ...}]. In other words, the results are generated in same order as these
      * nested loops:
-     *
+     * <p>
      * <pre>
      * for (T a : [a1, a2 ...])
      *   for (T b : [b1, b2 ...])
@@ -44,7 +40,7 @@ public class Cartesian {
      *       ...
      *         result = new T[]{a, b, c ...};
      * </pre>
-     *
+     * <p>
      * Each result is a new array of T, whose elements refer to the elements of the axes.
      * <p>
      * Don't change the axes while iterating over their product, as a rule. Changes to an
@@ -63,7 +59,7 @@ public class Cartesian {
     }
 
     /**
-     * Like {@link #product(Class,Iterable) product}(resultType, Arrays.asList(axes)), but
+     * Like {@link #product(Class, Iterable) product}(resultType, Arrays.asList(axes)), but
      * slightly more efficient.
      */
     public static <T> Iterable<T[]> product(Class<T> resultType, Iterable<? extends T>... axes) {
@@ -71,7 +67,7 @@ public class Cartesian {
     }
 
     /**
-     * Like {@link #product(Class,Iterable) product}(T.class, axes), except each result is a
+     * Like {@link #product(Class, Iterable) product}(T.class, axes), except each result is a
      * List instead of an array. So, the result element type can be generic (unlike an
      * array).
      */
@@ -93,6 +89,24 @@ public class Cartesian {
         return Iterables.transform(arrays, new AsList<T>());
     }
 
+    /**
+     * Create a generic array containing references to the given objects.
+     */
+    private static <T> T[] newArray(Class<? super T> elementType, Iterable<? extends T> from) {
+        List<T> list = new ArrayList<T>();
+        for (T f : from)
+            list.add(f);
+        return list.toArray(newArray(elementType, list.size()));
+    }
+
+    /**
+     * Create a generic array.
+     */
+    @SuppressWarnings("unchecked")
+    private static <T> T[] newArray(Class<? super T> elementType, int length) {
+        return (T[]) Array.newInstance(elementType, length);
+    }
+
     // Don't make this public. It's really dangerous.
     private static class AsList<T> implements Function<Object[], List<T>> {
         @Override
@@ -102,25 +116,13 @@ public class Cartesian {
         }
     }
 
-    /** Create a generic array containing references to the given objects. */
-    private static <T> T[] newArray(Class<? super T> elementType, Iterable<? extends T> from) {
-        List<T> list = new ArrayList<T>();
-        for (T f : from)
-            list.add(f);
-        return list.toArray(newArray(elementType, list.size()));
-    }
-
-    /** Create a generic array. */
-    @SuppressWarnings("unchecked")
-    private static <T> T[] newArray(Class<? super T> elementType, int length) {
-        return (T[]) Array.newInstance(elementType, length);
-    }
-
     private static class Product<T> implements Iterable<T[]> {
         private final Class<T> _resultType;
         private final Iterable<? extends T>[] _axes;
 
-        /** Caution: the given array of axes is contained by reference, not cloned. */
+        /**
+         * Caution: the given array of axes is contained by reference, not cloned.
+         */
         Product(Class<T> resultType, Iterable<? extends T>[] axes) {
             _resultType = resultType;
             _axes = axes;
@@ -138,6 +140,8 @@ public class Cartesian {
         }
 
         private static class ProductIterator<T> implements Iterator<T[]> {
+            private static final int NEW = -2;
+            private static final int DONE = -1;
             private final Iterable<? extends T>[] _axes;
             private final Iterator<? extends T>[] _iterators; // one per axis
             private final T[] _result; // a copy of the last result
@@ -149,13 +153,13 @@ public class Cartesian {
              * unknown (to be determined by this.hasNext).
              */
             private int _nextIndex = NEW;
-            private static final int NEW = -2;
-            private static final int DONE = -1;
 
-            /** Caution: the given array of axes is contained by reference, not cloned. */
+            /**
+             * Caution: the given array of axes is contained by reference, not cloned.
+             */
             ProductIterator(Class<T> resultType, Iterable<? extends T>[] axes) {
                 _axes = axes;
-                _iterators = Cartesian.<Iterator<? extends T>> newArray(Iterator.class, _axes.length);
+                _iterators = Cartesian.<Iterator<? extends T>>newArray(Iterator.class, _axes.length);
                 for (int a = 0; a < _axes.length; ++a) {
                     _iterators[a] = axes[a].iterator();
                 }

@@ -35,8 +35,8 @@ public class Memory {
 
     public List<String> getCommonVars(Memory toCompare) {
         List<String> res = new ArrayList<>();
-        for(String s : varAndVal.keySet()) {
-            if(toCompare.getValForVar(s) != null) {
+        for (String s : varAndVal.keySet()) {
+            if (toCompare.getValForVar(s) != null) {
                 res.add(s);
             }
         }
@@ -78,7 +78,7 @@ public class Memory {
         Memory memory = (Memory) o;
 
         for (Map.Entry<String, Integer> entry : memory.getVarAndVal().entrySet()) {
-            if(this.varAndVal.containsKey(entry.getKey()) && !this.varAndVal.get(entry.getKey()).equals(entry.getValue())) {
+            if (this.varAndVal.containsKey(entry.getKey()) && !this.varAndVal.get(entry.getKey()).equals(entry.getValue())) {
                 return false;
             }
         }
@@ -90,8 +90,8 @@ public class Memory {
         if (!(o instanceof Memory)) return false;
 
         Memory memory = (Memory) o;
-        for(String v : vars) {
-            if(!this.varAndVal.get(v).equals(memory.getValForVar(v))) {
+        for (String v : vars) {
+            if (!this.varAndVal.get(v).equals(memory.getValForVar(v))) {
                 return false;
             }
         }
